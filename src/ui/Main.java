@@ -41,7 +41,7 @@ public class Main {
 
     private static Food toBuy() {
         System.out.println("Please enter what you need to buy: ");
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("Please enter how many you would like to buy: ");
         int amount = scanner.nextInt();
         scanner.nextLine();
@@ -53,7 +53,7 @@ public class Main {
 
     private static Food addFridge() {
         System.out.println("Please enter what you bought: ");
-        String name = scanner.next();
+        String name = scanner.nextLine();
         System.out.println("Please enter how many you bought: ");
         int amount = scanner.nextInt();
         scanner.nextLine();
