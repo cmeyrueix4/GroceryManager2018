@@ -7,5 +7,15 @@ public enum FoodCategory {
     FRUIT,
     GRAIN,
     SWEETS,
-    OTHER,
+    OTHER;
+
+    public static FoodCategory convert(String category){
+        for (FoodCategory foodCategory : FoodCategory.values()) {
+            if (category.equalsIgnoreCase(foodCategory.name())){
+                return foodCategory;
+            }
+        }
+
+        return null;
+    }
 }

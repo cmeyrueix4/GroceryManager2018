@@ -2,6 +2,7 @@ package Tests;
 
 
 import Model.Food;
+import Model.FoodCategory;
 import Model.GroceryManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ public class GroceryManagerTest {
     @BeforeEach
     public void runBefore(){
         testGroceryManager = new GroceryManager();
-        egg = new Food("Egg", 5, "meat");
+        egg = new Food("Egg", 5, FoodCategory.MEAT);
     }
 
     @Test

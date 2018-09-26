@@ -4,7 +4,7 @@ package Model;
 public class Refrigerator {
 
     private int capacity;
-    private Food have;
+    private Food have;//each item being one hashmaps
 
     public Refrigerator(int capacity, Food have){
         this.capacity = capacity;
