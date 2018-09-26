@@ -3,21 +3,21 @@ package Model;
 
 public class Food {
 
-    private FoodCategory category;
+    private String category;
     private String name;
     private int amount;
 
-    public Food(String name, int amount, FoodCategory category) {
+    public Food(String name, int amount, String category) {
         this.name = name;
         this.amount = amount;
         this.category = category;
     }
 
-    public FoodCategory getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(FoodCategory category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

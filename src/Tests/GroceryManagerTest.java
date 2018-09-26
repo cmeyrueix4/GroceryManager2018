@@ -2,35 +2,33 @@ package Tests;
 
 
 import Model.Food;
-import Model.FoodCategory;
 import Model.GroceryManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GroceryManagerTest {
 
-
     GroceryManager testGroceryManager;
+    Food egg;
 
     @BeforeEach
     public void runBefore(){
-        GroceryManager testGroceryManager = new GroceryManager();
+        testGroceryManager = new GroceryManager();
+        egg = new Food("Egg", 5, "meat");
     }
 
     @Test
     public void testAddFoodBuy(){
-        Food egg = new Food("Egg", 5, FoodCategory.MEAT);
         testGroceryManager.addFoodBuy(egg);
         assertEquals(testGroceryManager.getNeedbuy().size(), 1);
     }
 
     @Test
-    public void testAddBought(){
-
+    public void testAddFoodFridge(){
+        testGroceryManager.addFoodFridge(egg);
+        assertEquals(testGroceryManager.getBought().size(), 1);
     }
 
 }

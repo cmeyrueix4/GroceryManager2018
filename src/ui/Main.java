@@ -26,7 +26,7 @@ public class Main {
                 System.out.println("Please enter the category (Dairy, Meat, Vegetable, Fruit, Grain, Sweets, Other): ");
                 String category = scanner.nextLine();
                 scanner.nextLine();
-                item = new Food(name, amount, FoodCategory.valueOf(category));
+                item = new Food(name, amount, category);
 
                 grocerylist.addFoodBuy(item);
 
@@ -42,7 +42,7 @@ public class Main {
                 scanner.nextLine();
 
                 System.out.println(amount + " " + name + " has been added to your fridge");
-                item = new Food(name, amount, FoodCategory.valueOf(category));
+                item = new Food(name, amount, category);
 
                 grocerylist.addFoodFridge(item);
             } else if (operation.equals("quit")) {
