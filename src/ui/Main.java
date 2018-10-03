@@ -1,19 +1,21 @@
 package ui;
 
-import Model.Food;
-import Model.FoodCategory;
-import Model.GroceryManager;
+import Model.*;
+
+import java.io.IOException;
 import java.util.Scanner;
 
-public class Main {
+public class Main{
     static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         GroceryManager grocerylist = new GroceryManager();
         Food item;
         String operation;
 
         while (true) {
+            grocerylist.loadBuy();
+
             System.out.println("Please type an option: buy, bought, or quit");
             operation = scanner.nextLine();
             System.out.println("you selected: " + operation);
@@ -46,14 +48,16 @@ public class Main {
 
                 grocerylist.addFoodFridge(item);
             } else if (operation.equals("quit")) {
+                grocerylist.saveBuy();
                 break;
             }
         }
         grocerylist.printToBuy();
         grocerylist.printPurchased();
-
     }
+
 }
+
 
 
 

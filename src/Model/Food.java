@@ -13,6 +13,11 @@ public class Food {
         this.category = category;
     }
 
+    public Food(String name, int amount) {
+        this.name = name;
+        this.amount = amount;
+    }
+
     public FoodCategory getCategory() {
         return category;
     }
