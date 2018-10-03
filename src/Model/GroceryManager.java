@@ -1,7 +1,6 @@
 package Model;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,18 +31,8 @@ public class GroceryManager implements Loadable, Saveable{
         }
     }
 
-//    public void loadBought() throws IOException {
-//        List<String> lines = Files.readAllLines(Paths.get("bought.txt"));//create two input files one bought and needbuy
-//        for (String s : lines) {
-//            ArrayList<String> partsofLine = splitOnSpace(s);
-//            String name = partsofLine.get(0);
-//            int amount = Integer.parseInt(partsofLine.get(1));
-//            Food f = new Food(name, amount);
-//            bought.add(f);
-//        }
-//    }
 
-    public static ArrayList<String> splitOnSpace(String line){
+    private static ArrayList<String> splitOnSpace(String line){
         String[] splits = line.split(" ");
         return new ArrayList<>(Arrays.asList(splits));
     }
@@ -53,24 +42,6 @@ public class GroceryManager implements Loadable, Saveable{
 
         Files.write(path, toBuy(), Charset.defaultCharset());
     }
-
-//        PrintWriter writer = new PrintWriter("needbuy.txt","UTF-8");
-//        for(Food f:needbuy){
-//            writer.println(f.getName()+" "+f.getAmount()+" ");
-//         }
-//
-//        writer.close();
-
-//
-//    public void saveBought() throws IOException {
-//        PrintWriter writer = new PrintWriter("bought.txt","UTF-8");
-//        for(Food f:needbuy){
-//            writer.println(f.getName()+" "+f.getAmount());
-//        }
-//
-//        writer.close();
-//    }
-
 
     //MODIFIES: needbuy list
     //EFFECTS: adds a food item to the needbuy list
@@ -129,3 +100,31 @@ public class GroceryManager implements Loadable, Saveable{
     }
 
 }
+
+//    public void loadBought() throws IOException {
+//        List<String> lines = Files.readAllLines(Paths.get("bought.txt"));//create two input files one bought and needbuy
+//        for (String s : lines) {
+//            ArrayList<String> partsofLine = splitOnSpace(s);
+//            String name = partsofLine.get(0);
+//            int amount = Integer.parseInt(partsofLine.get(1));
+//            Food f = new Food(name, amount);
+//            bought.add(f);
+//        }
+//    }
+
+//        PrintWriter writer = new PrintWriter("needbuy.txt","UTF-8");
+//        for(Food f:needbuy){
+//            writer.println(f.getName()+" "+f.getAmount()+" ");
+//         }
+//
+//        writer.close();
+
+//
+//    public void saveBought() throws IOException {
+//        PrintWriter writer = new PrintWriter("bought.txt","UTF-8");
+//        for(Food f:needbuy){
+//            writer.println(f.getName()+" "+f.getAmount());
+//        }
+//
+//        writer.close();
+//    }

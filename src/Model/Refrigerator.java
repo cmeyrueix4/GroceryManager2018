@@ -53,7 +53,7 @@ public class Refrigerator implements Amount{
 
 
     //EFFECTS returns the index number of a food in have, if not in list returns -1
-    public int getFoodIndex(String name){
+    private int getFoodIndex(String name){
         for(int i=0; i<have.size(); i++) {
             if (have.get(i).getName().equals(name)) {
                 return i;
@@ -62,19 +62,19 @@ public class Refrigerator implements Amount{
         return -1;
     }
 
-    public ArrayList<Food> getHave() {
+    private ArrayList<Food> getHave() {
         return have;
     }
 
-    public void setHave(ArrayList<Food> have) {
+    private void setHave(ArrayList<Food> have) {
         this.have = have;
     }
 
-    public int getCapacity() {
+    private int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    private void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 }
