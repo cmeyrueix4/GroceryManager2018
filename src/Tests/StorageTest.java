@@ -3,7 +3,7 @@ package Tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AmountTest {
+public class StorageTest {
 
     @Test
     public void testHowMany(){

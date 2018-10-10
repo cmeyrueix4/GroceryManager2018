@@ -26,10 +26,10 @@ public class GroceryManagerTest {
         assertEquals(testGroceryManager.getNeedbuy().size(), 1);
     }
 
-    @Test
-    public void testAddFoodFridge(){
-        testGroceryManager.addFoodFridge(egg);
-        assertEquals(testGroceryManager.getBought().size(), 1);
-    }
+//    @Test
+//    public void testAddFoodFridge(){
+//        testGroceryManager.addFoodFridge(egg);
+//        assertEquals(testGroceryManager.getBought().size(), 1);
+//    }
 
 }
