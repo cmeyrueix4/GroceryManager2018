@@ -126,12 +126,6 @@ public class GroceryManager implements Loadable, Saveable {
         }
     }
 
-//    //MODIFIES: bought list SHOULD CALL FRIDGE
-//    //EFFECTS: adds a food item to the bought list
-//    public void addFoodFridge(Food food) {
-//        bought.add(food);
-//    }
-
     //EFFECTS: prints out the needbuy list
     public void printToBuy() {
         System.out.println("You need to buy ");
@@ -172,6 +166,23 @@ public class GroceryManager implements Loadable, Saveable {
         }
     }
 
+    public ArrayList<Food> getNeedbuy() {
+        return needbuy;
+    }
+
+    private void setNeedbuy(ArrayList<Food> needbuy) {
+        this.needbuy = needbuy;
+    }
+
+    // goShopping function goes through needbuy and adds it to fridge
+//    public void goShopping(){
+//        for (Food f: needbuy, c.getHave(), r.getHave(), fr.getHave())
+//            if( )
+//    }
+
+}
+
+
 
 
 
@@ -193,21 +204,7 @@ public class GroceryManager implements Loadable, Saveable {
 //        return saveBuy;
 //    }
 
-    // goShopping function goes through needbuy and adds it to fridge
-//    public void goShopping(){
-//        for (Food f: needbuy, c.getHave(), r.getHave(), fr.getHave())
-//            if( )
-//    }
 
-    public ArrayList<Food> getNeedbuy() {
-        return needbuy;
-    }
-
-    private void setNeedbuy(ArrayList<Food> needbuy) {
-        this.needbuy = needbuy;
-    }
-
-}
 
 //    public void loadBought() throws IOException {
 //        List<String> lines = Files.readAllLines(Paths.get("bought.txt"));//create two input files one bought and needbuy

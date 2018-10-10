@@ -47,12 +47,6 @@ public class Main{
                 System.out.println("Please enter where it should be stored: fridge, freezer, or cupboard");
                 String stored = scanner.nextLine();
                 grocerylist.addFoodBought(stored, item);
-
-          //      System.out.println(amount + " " + name + " has been added to your fridge");
-//                item = new Food(name, amount, FoodCategory.convert(category));
-//
-//                grocerylist.addFoodFridge(item);
-
             }
 
             else if (operation.equals("view")){
