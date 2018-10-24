@@ -1,19 +1,13 @@
-package Tests;
+package tests;
 
-import Model.Food;
-import Model.FoodCategory;
-import Model.GroceryManager;
-import Model.Saveable;
+import model.Food;
+import model.FoodCategory;
+import model.GroceryManager;
+import model.exceptions.CategoryException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +25,7 @@ public class SaveableTest {
     }
 
     @Test
-    public void testSaveBuy() throws IOException{
+    public void testSaveBuy() throws IOException, CategoryException {
         s.addFoodBuy(new Food("Egg", 6, FoodCategory.MEAT));
 //        ArrayList<String> inFile = new ArrayList<>();
 //

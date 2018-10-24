@@ -1,6 +1,6 @@
-package Tests;
+package tests;
 
-import Model.Refrigerator;
+import model.Refrigerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

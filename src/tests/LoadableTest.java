@@ -1,8 +1,9 @@
-package Tests;
+package tests;
 
-import Model.Food;
-import Model.FoodCategory;
-import Model.GroceryManager;
+import model.Food;
+import model.FoodCategory;
+import model.GroceryManager;
+import model.exceptions.CategoryException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,7 @@ public class LoadableTest {
     }
 
     @Test
-    public void testLoadBuy() throws IOException {
+    public void testLoadBuy() throws IOException, CategoryException {
         g.addFoodBuy(new Food("Egg", 6, FoodCategory.MEAT));
 
         s.loadBuy();

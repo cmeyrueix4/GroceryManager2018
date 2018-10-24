@@ -1,4 +1,6 @@
-package Model;
+package model;
+
+import model.exceptions.CategoryException;
 
 public enum FoodCategory {
     DAIRY,
@@ -9,13 +11,13 @@ public enum FoodCategory {
     SWEETS,
     OTHER;
 
-    public static FoodCategory convert(String category){
+    public static FoodCategory parseCategory(String category) throws CategoryException{
         for (FoodCategory foodCategory : FoodCategory.values()) {
             if (category.equalsIgnoreCase(foodCategory.name())){
                 return foodCategory;
             }
         }
 
-        return null;
+        throw new CategoryException();
     }
 }
