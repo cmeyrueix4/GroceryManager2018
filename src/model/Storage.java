@@ -36,6 +36,7 @@ public abstract class Storage {
         return false;
     }
 
+//
     //EFFECTS: returns the amount of a given food
     public int howMany(String name) {
         for (Food h : have) {
