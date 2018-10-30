@@ -1,21 +1,37 @@
 package model;
 
 
+import java.util.Objects;
+
 public class Food {
 
     private FoodCategory category;
     private String name;
-    private int amount;
+    private Storage s;
 
-    public Food(String name, int amount, FoodCategory category) {
+    public Food(String name, FoodCategory category) {
         this.name = name;
-        this.amount = amount;
         this.category = category;
     }
 
-    public Food(String name, int amount) {
-        this.name = name;
-        this.amount = amount;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Food food = (Food) o;
+        return category == food.category &&
+                Objects.equals(name, food.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(category, name);
+    }
+
+    public void setStorage(Storage s) {
+        this.s = s;
+        this.s.addToStorage(this, 0);
     }
 
     public FoodCategory getCategory() {
@@ -35,10 +51,7 @@ public class Food {
     }
 
     public int getAmount() {
-        return amount;
+        return s.howMany(name);
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
 }

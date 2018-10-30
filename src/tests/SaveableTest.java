@@ -8,9 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class SaveableTest {
@@ -26,24 +28,12 @@ public class SaveableTest {
 
     @Test
     public void testSaveBuy() throws IOException, CategoryException {
-        s.addFoodBuy(new Food("Egg", 6, FoodCategory.MEAT));
-//        ArrayList<String> inFile = new ArrayList<>();
-//
-//        inFile = s.toBuy();
+        s.addFoodBuy(new Food("Egg", FoodCategory.MEAT), 6);
         s.saveBuy();
 
-        s2.loadBuy();
 
-//        List<String> y = new ArrayList<>();
-//        Path path = Paths.get("C:\\Users\\Cyrielle\\IdeaProjects\\projectw1_team311").resolve("needbuy.txt");
-
-        assertEquals(s.getNeedbuy().size(), s2.getNeedbuy().size());
-
-// y = Files.readAllLines(path);
-//
-//        for (int i=0; i<inFile.size(); i++){
-//            assertTrue(inFile.get(i).equals(y.get(i)));
-//        }
+        List<String> y = Files.readAllLines(Paths.get("needbuy.txt"));
+        assertEquals("Egg 6 MEAT", y.get(0));
     }
 
 }

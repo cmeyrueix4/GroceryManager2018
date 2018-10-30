@@ -23,15 +23,19 @@ public class Main {
             if (operation.equals("buy")) {
                 boolean properFoodItem = false;
                 Food newFoodItem = null;
+                int amt = 0;
+                String name = null;
+                String category = null;
                 while (!properFoodItem) {
                     System.out.println("Please enter what you need to buy: ");
-                    String name = scanner.nextLine();
+                    name = scanner.nextLine();
                     System.out.println("Please enter how many you would like to buy: ");
                     String amount = scanner.nextLine();
                     System.out.println("Please enter the category (Dairy, Meat, Vegetable, Fruit, Grain, Sweets, Other): ");
-                    String category = scanner.nextLine();
+                    category = scanner.nextLine();
                     try {
-                        grocerylist.createFoodItem(name, amount, category);
+                        grocerylist.createFoodItem(name, category);
+                        amt = Integer.parseInt(amount);
                         properFoodItem = true;
                     } catch (CategoryException ce) {
                         properFoodItem = false;
@@ -42,14 +46,16 @@ public class Main {
                     }
                 }
 
-                grocerylist.addFoodBuy(newFoodItem);
+               newFoodItem = grocerylist.createFoodItem(name, category);
 
-                System.out.println("You need to buy " + newFoodItem.getName() + " in the quantity of: " + newFoodItem.getAmount());
+                grocerylist.addFoodBuy(newFoodItem, amt);
+                System.out.println("You need to buy " + newFoodItem.getName() + " in the quantity of: " + amt);
 
 
             } else if (operation.equals("bought")) {
                 boolean isGoodUserInput = false;
                 Food newFoodItem = null;
+                int amt = 0;
                 while (!isGoodUserInput) {
                     System.out.println("Please enter what you bought: ");
                     String name = scanner.nextLine();
@@ -58,7 +64,8 @@ public class Main {
                     System.out.println("Please enter the category (Dairy, Meat, Vegetable, Fruit, Grain, Sweets, Other): ");
                     String category = scanner.nextLine();
                     try {
-                        newFoodItem = grocerylist.createFoodItem(name, amount, category);
+                        newFoodItem = grocerylist.createFoodItem(name, category);
+                        amt = Integer.parseInt(amount);
                         isGoodUserInput = true;
                     } catch (CategoryException ce) {
                         isGoodUserInput = false;
@@ -73,7 +80,7 @@ public class Main {
                 }
                 System.out.println("Please enter where it should be stored: fridge, freezer, or cupboard");
                 String stored = scanner.nextLine();
-                grocerylist.addFoodBought(stored, newFoodItem);
+                grocerylist.addFoodBought(stored, newFoodItem, amt);
             }
 
             //add storage todo

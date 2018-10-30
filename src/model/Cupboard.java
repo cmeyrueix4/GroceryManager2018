@@ -13,9 +13,5 @@ public class Cupboard extends Storage{
         System.out.println(food.getAmount() + " " + food.getName() + " " + "is now in your cupboard!");
     }
 
-    public ArrayList<Food> getHave() {
-        return have;
-    }
-
 }
 

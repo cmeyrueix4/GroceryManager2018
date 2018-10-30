@@ -26,55 +26,37 @@ public class GroceryManagerTest {
 
     @Test
     public void testAddFoodBuy(){
-        egg = new Food("Egg", 5, FoodCategory.MEAT);
-        testGroceryManager.addFoodBuy(egg);
+        egg = new Food("Egg",FoodCategory.MEAT);
+        testGroceryManager.addFoodBuy(egg,5);
         assertEquals(testGroceryManager.getNeedbuy().size(), 1);
     }
 
     @Test
     public void testCreateNewFoodItem() {
         String name = "Rice";
-        String amount = "1";
         String category = "Grain";
         try {
-            testGroceryManager.createFoodItem(name, amount, category);
+            testGroceryManager.createFoodItem(name, category);
         } catch (CategoryException e) {
-            fail("");
-        }catch (NumberFormatException e){
             fail("");
         }
     }
 
-    @Test
-    public void testCreateNewFoodItemThrowNumberFormatException(){
-        String name = "Rice";
-        String amount = "f";
-        String category = "Grain";
-        try {
-            testGroceryManager.createFoodItem(name, amount,category);
-        } catch (CategoryException e) {
-            fail("");
-        }catch (NumberFormatException e){
-        }
-    }
 
     @Test
     public void testCreateNewFoodItemThrowCategoryException(){
         String name = "Rice";
-        String amount = "1";
         String category = "3";
         try {
-            testGroceryManager.createFoodItem(name, amount,category);
-        } catch (CategoryException e) {
-        } catch (NumberFormatException e) {
-            fail("");
+            testGroceryManager.createFoodItem(name, category);
+        } catch (CategoryException ignored) {
         }
     }
 
     @Test
     public void testAddFoodBoughtNotAlreadyInFridge(){
-        egg = new Food("Egg", 5, FoodCategory.MEAT);
-        testGroceryManager.addFoodBought("fridge",egg);
+        egg = new Food("Egg",  FoodCategory.MEAT);
+        testGroceryManager.addFoodBought("fridge",egg,5);
     }
 
 //    @Test
@@ -108,10 +90,12 @@ public class GroceryManagerTest {
 //
 //    }
 
-    @Test
-    public void testPrintToBuy(){
-
-    }
+//    @Test
+//    public void testPrintToBuy(){
+//        testGroceryManager.addFoodBuy(egg);
+// .equals with a string we are expecting
+//
+//    }
 
     @Test
     public void testPrintWhereStored(){

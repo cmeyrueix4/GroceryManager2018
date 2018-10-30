@@ -16,9 +16,6 @@ public class Refrigerator extends Storage{
 
     //add to have do inFridge, if not add
 
-    public ArrayList<Food> getHave() {
-        return have;
-    }
 }
 
 //    private boolean inFridge(String name){

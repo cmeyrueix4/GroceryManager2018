@@ -1,21 +1,31 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Storage {
 
     protected int capacity;
-    protected ArrayList<Food> have;
+    protected Map<Food, Integer> have;
 
     public Storage(int capacity) {
         this.capacity = capacity;
-        this.have = new ArrayList<>();
+        this.have = new HashMap<>();
     }
 
     //MODIFIES: this
     //EFFECTS: adds a food to have list
-    public void addToStorage(Food food) {
-        this.have.add(food);
+    public void addToStorage(Food food, int quantity) {
+        int n = quantity;
+        if (this.have.containsKey(food)) {
+            if (n == 0) {
+                return;
+            }
+            n = this.have.get(food) + n;
+        }
+        this.have.put(food, n);
+        food.setStorage(this);
     }
 
     public abstract void label(Food food);
@@ -28,7 +38,7 @@ public abstract class Storage {
 
     //EFFECTS: checks if a food name is already in list
     public boolean inStorage(String name) {
-        for (Food h : have) {
+        for (Food h : have.keySet()) {
             if (h.getName().equals(name)) {
                 return true;
             }
@@ -36,12 +46,20 @@ public abstract class Storage {
         return false;
     }
 
-//
+    public int howMany(Food food) {
+        Integer i = have.get(food);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    //
     //EFFECTS: returns the amount of a given food
     public int howMany(String name) {
-        for (Food h : have) {
+        for (Food h : have.keySet()) {
             if (h.getName().equals(name)) {
-                return h.getAmount();
+                return howMany(h);
             }
         }
         return 0;
@@ -50,39 +68,43 @@ public abstract class Storage {
     //REQUIRES inStorage to be true
     //MODIFIES object in list
     //EFFECTS: adds num to the amount of a given Food
-    public int addMore(int num, String name, FoodCategory category) {
+    public void addMore(int num, String name, FoodCategory category) {
         if (inStorage(name)) {
-            have.set(getFoodIndex(name), new Food(name, num + have.get(getFoodIndex(name)).getAmount(), category));
+            this.addToStorage(new Food(name, category), num);
         }
-        return 0;
     }
 
     //REQUIRES inFridge to be true
     //MODIFIES object in list
     //EFFECTS subtracts n to the amount of given Food
-    public int addLess(int num, String name) {
+    public void remove(int num, String name, FoodCategory category) {
         if (inStorage(name)) {
-            have.set(getFoodIndex(name), new Food(name, have.get(getFoodIndex(name)).getAmount() - num));
+            this.addToStorage(new Food(name, category), -num);
         }
-        return 0;
+    }
+//
+//
+//    //EFFECTS returns the index number of a food in have, if not in list returns -1
+//    public int getFoodIndex(String name) {
+//        for (int i = 0; i < have.size(); i++) {
+//            if (have.get(i).getName().equals(name)) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
+
+    public void print() {
+        for (Map.Entry<Food, Integer> e : have.entrySet()) {
+            System.out.println(e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
+        }
     }
 
-
-    //EFFECTS returns the index number of a food in have, if not in list returns -1
-    public int getFoodIndex(String name) {
-        for (int i = 0; i < have.size(); i++) {
-            if (have.get(i).getName().equals(name)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public ArrayList<Food> getHave() {
+    public Map<Food,Integer> getHave() {
         return have;
     }
 
-    public void setHave(ArrayList<Food> have) {
+    public void setHave(Map<Food, Integer> have) {
         this.have = have;
     }
 
@@ -95,14 +117,3 @@ public abstract class Storage {
     }
 
 }
-
-
-
-//    //REQUIRES: a non-empty list
-//    //MODIFIES: this
-//    //EFFECTS: checks to see if food is already in list, if true then increases the amount by increase
-//    public void addAmountToStorage (Food food, Integer increase){
-//        if (have.contains(food.getName()) && !have.isEmpty()){
-//            food.setAmount(food.getAmount() + increase);
-//        }
-//    }

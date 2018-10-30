@@ -13,9 +13,6 @@ public class Freezer extends Storage {
         System.out.println(food.getAmount() + " " + food.getName() + " " + "is now in your freezer!");
     }
 
-    public ArrayList<Food> getHave() {
-        return this.have;
-    }
 
 }
 

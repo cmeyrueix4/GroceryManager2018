@@ -8,7 +8,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoadableTest {
@@ -17,21 +22,22 @@ public class LoadableTest {
     public GroceryManager s;
 
     @BeforeEach
-    public void runBefore(){
+    public void runBefore() {
         g = new GroceryManager();
         s = new GroceryManager();
     }
 
     @Test
     public void testLoadBuy() throws IOException, CategoryException {
-        g.addFoodBuy(new Food("Egg", 6, FoodCategory.MEAT));
-
+        List<String> lines = new ArrayList<>();
+        lines.add("Egg 6 MEAT");
+        lines.add("bacon 6 MEAT");
+        lines.add("oranges 5 FRUIT");
+        lines.add("wine 1 OTHER");
+        Files.write(Paths.get("needbuy.txt"), lines);
         s.loadBuy();
+        assertEquals((Integer)6, s.getNeedbuy().get(new Food("Egg", FoodCategory.MEAT)));
 
-        for (int i = 0; i < g.getNeedbuy().size(); i++) {
-            assertTrue(s.getNeedbuy().get(i).getName().equals(g.getNeedbuy().get(i).getName()));
-            assertTrue(s.getNeedbuy().get(i).getAmount() == g.getNeedbuy().get(i).getAmount());
-        }
     }
 
 }
