@@ -18,17 +18,17 @@ public abstract class Storage {
     //EFFECTS: adds a food to have list
     public void addToStorage(Food food, int quantity) {
         int n = quantity;
+        if (n == 0) {
+            return;
+        }
         if (this.have.containsKey(food)) {
-            if (n == 0) {
-                return;
-            }
             n = this.have.get(food) + n;
         }
         this.have.put(food, n);
         food.setStorage(this);
     }
 
-    public abstract void label(Food food);
+    public abstract void label();
 
     //EFFECTS: checks if list have is empty
     public boolean isEmpty() {
@@ -54,7 +54,6 @@ public abstract class Storage {
         return i;
     }
 
-    //
     //EFFECTS: returns the amount of a given food
     public int howMany(String name) {
         for (Food h : have.keySet()) {
@@ -82,19 +81,9 @@ public abstract class Storage {
             this.addToStorage(new Food(name, category), -num);
         }
     }
-//
-//
-//    //EFFECTS returns the index number of a food in have, if not in list returns -1
-//    public int getFoodIndex(String name) {
-//        for (int i = 0; i < have.size(); i++) {
-//            if (have.get(i).getName().equals(name)) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
 
     public void print() {
+        label();
         for (Map.Entry<Food, Integer> e : have.entrySet()) {
             System.out.println(e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
         }
@@ -117,3 +106,15 @@ public abstract class Storage {
     }
 
 }
+
+//
+//
+//    //EFFECTS returns the index number of a food in have, if not in list returns -1
+//    public int getFoodIndex(String name) {
+//        for (int i = 0; i < have.size(); i++) {
+//            if (have.get(i).getName().equals(name)) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }

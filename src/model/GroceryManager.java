@@ -23,86 +23,6 @@ public class GroceryManager implements Loadable, Saveable {
         c = new Cupboard(0);
     }
 
-    public void loadBuy() throws IOException, CategoryException {
-        Path path = Paths.get("needbuy.txt");
-        List<String> lines = Files.readAllLines(path);//create two input files one bought and needbuy
-        for (String s : lines) {
-            ArrayList<String> partsofLine = splitOnSpace(s);
-            String name = partsofLine.get(0);
-            int amount = Integer.parseInt(partsofLine.get(1));
-            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
-            Food f = new Food(name, category);
-            needbuy.put(f, amount);
-        }
-
-        path = Paths.get("freezer.txt");
-        lines = Files.readAllLines(path);//create two input files one bought and needbuy
-        for (String s : lines) {
-            ArrayList<String> partsofLine = splitOnSpace(s);
-            String name = partsofLine.get(0);
-            int amount = Integer.parseInt(partsofLine.get(1));
-            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
-            Food f = new Food(name, category);
-            fr.addToStorage(f, amount);
-        }
-
-        path = Paths.get("C:\\Users\\Cyrielle\\IdeaProjects\\projectw1_team311").resolve("fridge.txt");
-        lines = Files.readAllLines(path);//create two input files one bought and needbuy
-        for (String s : lines) {
-            ArrayList<String> partsofLine = splitOnSpace(s);
-            String name = partsofLine.get(0);
-            int amount = Integer.parseInt(partsofLine.get(1));
-            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
-            Food f = new Food(name, category);
-            r.addToStorage(f, amount);
-        }
-
-        path = Paths.get("C:\\Users\\Cyrielle\\IdeaProjects\\projectw1_team311").resolve("cupboard.txt");
-        lines = Files.readAllLines(path);//create two input files one bought and needbuy
-        for (String s : lines) {
-            ArrayList<String> partsofLine = splitOnSpace(s);
-            String name = partsofLine.get(0);
-            int amount = Integer.parseInt(partsofLine.get(1));
-            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
-            Food f = new Food(name, category);
-            c.addToStorage(f, amount);
-        }
-    }
-
-
-    private static ArrayList<String> splitOnSpace(String line) {
-        String[] splits = line.split(" ");
-        return new ArrayList<>(Arrays.asList(splits));
-    }
-
-
-    public void saveBuy() throws IOException {
-        PrintWriter writer = new PrintWriter("needbuy.txt", "UTF-8");
-        for (Map.Entry<Food, Integer> f : needbuy.entrySet()) {
-            writer.println(f.getKey().getName() + " " + f.getValue() + " " + f.getKey().getCategory() + " ");
-        }
-        writer.close();
-
-        writer = new PrintWriter("freezer.txt", "UTF-8");
-        for (Food f : fr.getHave().keySet()) {
-            writer.println(f.getName() + " " + f.getAmount() + " " + f.getCategory());
-        }
-        writer.close();
-
-        writer = new PrintWriter("fridge.txt", "UTF-8");
-        for (Food f : r.getHave().keySet()) {
-            writer.println(f.getName() + " " + f.getAmount() + " " + f.getCategory());
-        }
-        writer.close();
-
-        writer = new PrintWriter("cupboard.txt", "UTF-8");
-        for (Food f : c.getHave().keySet()) {
-            writer.println(f.getName() + " " + f.getAmount() + " " + f.getCategory());
-        }
-        writer.close();
-    }
-
-
     //MODIFIES: needbuy list
     //EFFECTS: adds a food item to the needbuy list
     public void addFoodBuy(Food food, int amount) {
@@ -147,36 +67,10 @@ public class GroceryManager implements Loadable, Saveable {
         }
     }
 
-    //EFFECTS: prints out the bought list with a specific statement for each storage type
-    public void printWhereStored() {
-        printInFridge();
-        System.out.println(" is in your fridge");
-        printInCupboard();
-        System.out.println(" is in your cupboard");
-        printInFreezer();
-        System.out.println(" is in your freezer");
-    }
-
     //EFFECTS: prints out the list of things in storage
     public void printPurchased() {
-        System.out.println("You currently have:");
-
-        fr.print();
-
         r.print();
-
-        c.print();
-    }
-
-    public void printInFridge(){
-        r.print();
-    }
-
-    public void printInFreezer(){
         fr.print();
-    }
-
-    public void printInCupboard(){
         c.print();
     }
 
@@ -187,7 +81,93 @@ public class GroceryManager implements Loadable, Saveable {
     private void setNeedbuy(Map<Food, Integer> needbuy) {
         this.needbuy = needbuy;
     }
+
+    public void loadBuy() throws IOException, CategoryException {
+        Path path = Paths.get("needbuy.txt");
+        loadNeedBuy(path);
+
+        path = Paths.get("freezer.txt");
+        loadEachStorageList(path, fr);
+
+        path = Paths.get("C:\\Users\\Cyrielle\\IdeaProjects\\projectw1_team311").resolve("fridge.txt");
+        loadEachStorageList(path, r);
+
+        path = Paths.get("C:\\Users\\Cyrielle\\IdeaProjects\\projectw1_team311").resolve("cupboard.txt");
+        loadEachStorageList(path, c);
+    }
+
+    private void loadNeedBuy(Path path) throws IOException, CategoryException{
+        List<String> lines = Files.readAllLines(path);//create two input files one bought and needbuy
+        for (String s : lines) {
+            ArrayList<String> partsofLine = splitOnSpace(s);
+            String name = partsofLine.get(0);
+            int amount = Integer.parseInt(partsofLine.get(1));
+            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
+            Food f = new Food(name, category);
+            needbuy.put(f, amount);
+        }
+    }
+
+    private void loadEachStorageList(Path path, Storage st) throws IOException, CategoryException {
+        List<String> lines;
+        lines = Files.readAllLines(path);//create two input files one bought and needbuy
+        for (String s : lines) {
+            ArrayList<String> partsofLine = splitOnSpace(s);
+            String name = partsofLine.get(0);
+            int amount = Integer.parseInt(partsofLine.get(1));
+            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
+            Food f = new Food(name, category);
+            st.addToStorage(f, amount);
+        }
+    }
+
+
+    private static ArrayList<String> splitOnSpace(String line) {
+        String[] splits = line.split(" ");
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+
+    public void saveBuy() throws IOException {
+        PrintWriter writer = new PrintWriter("needbuy.txt", "UTF-8");
+        for (Map.Entry<Food, Integer> f : needbuy.entrySet()) {
+            writer.println(f.getKey().getName() + " " + f.getValue() + " " + f.getKey().getCategory() + " ");
+        }
+        writer.close();
+
+        writer = new PrintWriter("freezer.txt", "UTF-8");
+        saveStorageList(writer, fr.getHave());
+
+        writer = new PrintWriter("fridge.txt", "UTF-8");
+        saveStorageList(writer, r.getHave());
+
+        writer = new PrintWriter("cupboard.txt", "UTF-8");
+        saveStorageList(writer, c.getHave());
+    }
+
+    private void saveStorageList(PrintWriter writer, Map<Food, Integer> have) {
+        for (Food f : have.keySet()) {
+            writer.println(f.getName() + " " + f.getAmount() + " " + f.getCategory());
+        }
+        writer.close();
+    }
+
 }
+
+//    public void printInFridge(){
+//        r.print();
+//        System.out.println(" is in your fridge");
+//    }
+//
+//    public void printInFreezer(){
+//        fr.print();
+//        System.out.println(" is in your freezer");
+//    }
+//
+//    public void printInCupboard(){
+//        c.print();
+//        System.out.println(" is in your cupboard");
+//    }
 
      //TODO goShopping function goes through needbuy and adds it to fridge
     //for each item food.getName()

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Freezer extends Storage {
 
     public Freezer(int capacity) {
@@ -9,8 +7,8 @@ public class Freezer extends Storage {
     }
 
     @Override
-    public void label(Food food) {
-        System.out.println(food.getAmount() + " " + food.getName() + " " + "is now in your freezer!");
+    public void label() {
+        System.out.println("In your freezer you have: ");
     }
 
 

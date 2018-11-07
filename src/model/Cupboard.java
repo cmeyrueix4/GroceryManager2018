@@ -9,8 +9,8 @@ public class Cupboard extends Storage{
     }
 
     @Override
-    public void label(Food food) {
-        System.out.println(food.getAmount() + " " + food.getName() + " " + "is now in your cupboard!");
+    public void label() {
+        System.out.println("In your cupboard you have: ");
     }
 
 }

@@ -10,8 +10,8 @@ public class Refrigerator extends Storage{
     }
 
     @Override
-    public void label(Food food) {
-        System.out.println(food.getAmount() + " " + food.getName() + " " + "is now in your fridge!");
+    public void label() {
+        System.out.println("In your fridge you have: ");
     }
 
     //add to have do inFridge, if not add

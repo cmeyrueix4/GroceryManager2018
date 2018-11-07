@@ -10,9 +10,9 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException, CategoryException {
-        GroceryManager grocerylist = new GroceryManager();
+        GroceryManager groceryList = new GroceryManager();
         String operation;
-        grocerylist.loadBuy();
+        groceryList.loadBuy();
 
         while (true) {
 
@@ -34,7 +34,7 @@ public class Main {
                     System.out.println("Please enter the category (Dairy, Meat, Vegetable, Fruit, Grain, Sweets, Other): ");
                     category = scanner.nextLine();
                     try {
-                        grocerylist.createFoodItem(name, category);
+                        groceryList.createFoodItem(name, category);
                         amt = Integer.parseInt(amount);
                         properFoodItem = true;
                     } catch (CategoryException ce) {
@@ -46,9 +46,9 @@ public class Main {
                     }
                 }
 
-               newFoodItem = grocerylist.createFoodItem(name, category);
+               newFoodItem = groceryList.createFoodItem(name, category);
 
-                grocerylist.addFoodBuy(newFoodItem, amt);
+                groceryList.addFoodBuy(newFoodItem, amt);
                 System.out.println("You need to buy " + newFoodItem.getName() + " in the quantity of: " + amt);
 
 
@@ -64,7 +64,7 @@ public class Main {
                     System.out.println("Please enter the category (Dairy, Meat, Vegetable, Fruit, Grain, Sweets, Other): ");
                     String category = scanner.nextLine();
                     try {
-                        newFoodItem = grocerylist.createFoodItem(name, category);
+                        newFoodItem = groceryList.createFoodItem(name, category);
                         amt = Integer.parseInt(amount);
                         isGoodUserInput = true;
                     } catch (CategoryException ce) {
@@ -73,28 +73,28 @@ public class Main {
                     } catch (NumberFormatException nfe) {
                         isGoodUserInput = false;
                         System.out.println("Invalid entry. Please enter a number.");
-                    }finally {
-                        System.out.println("Bon appetit!!");
                     }
 
                 }
                 System.out.println("Please enter where it should be stored: fridge, freezer, or cupboard");
                 String stored = scanner.nextLine();
-                grocerylist.addFoodBought(stored, newFoodItem, amt);
+                groceryList.addFoodBought(stored, newFoodItem, amt);
             }
 
             //add storage todo
             else if (operation.equals("view")) {
-                grocerylist.printToBuy();
-                grocerylist.printPurchased();
+                groceryList.printToBuy();
+                groceryList.printPurchased();
             } else if (operation.equals("quit")) {
-                grocerylist.saveBuy();
+                groceryList.saveBuy();
                 break;
             }
         }
-        grocerylist.printToBuy();
-        grocerylist.printWhereStored();
+        groceryList.printToBuy();
+        groceryList.printPurchased();
     }
+
+
 
 }
 
