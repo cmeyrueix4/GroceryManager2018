@@ -1,21 +1,33 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import model.exceptions.CategoryException;
 
-public abstract class Storage {
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
+
+public abstract class Storage implements Observer {
 
     protected int capacity;
     protected Map<Food, Integer> have;
 
-    public Storage(int capacity) {
+    public Storage(int capacity) //throws IOExceptions, CategoryException
+     {
         this.capacity = capacity;
         this.have = new HashMap<>();
+//        setCapacity(100);
+//        decreaseCapacity();
+//        load();
+    }
+
+    @Override
+    public void update(Observable o, Object arg){
+        System.out.println("An item has been added to" + arg);
     }
 
     //MODIFIES: this
-    //EFFECTS: adds a food to have list
+    //EFFECTS: adds a food to have list and decreases capacity in storage
     public void addToStorage(Food food, int quantity) {
         int n = quantity;
         if (n == 0) {
@@ -46,6 +58,7 @@ public abstract class Storage {
         return false;
     }
 
+    //EFFECTS: checks to see if amount of food is null and returns 0, if not null then returns amount i
     public int howMany(Food food) {
         Integer i = have.get(food);
         if (i == null) {
@@ -82,12 +95,46 @@ public abstract class Storage {
         }
     }
 
+    //REQUIRES: an item to be in storage
+    //MODIFIES: this
+    //EFFECTS: when an item is added to storage, capacity is increased based on amount
+    public void decreaseCapacity() {
+        for (Map.Entry<Food, Integer> e : have.entrySet()) {
+            for (int i = 0; i <= e.getValue(); i++) {
+                this.capacity = -1;
+            }
+        }
+    }
+
+
+    //EFFECTS: prints the items in the storage
     public void print() {
         label();
         for (Map.Entry<Food, Integer> e : have.entrySet()) {
             System.out.println(e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
         }
     }
+
+
+
+//    private void load(Path path) throws IOException, CategoryException {
+//        List<String> lines;
+//        lines = Files.readAllLines(path);//create two input files one bought and needbuy
+//        for (String s : lines) {
+//            ArrayList<String> partsofLine = splitOnSpace(s);
+//            String name = partsofLine.get(0);
+//            int amount = Integer.parseInt(partsofLine.get(1));
+//            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
+//            Food f = new Food(name, category);
+//            addToStorage(f, amount);
+//        }
+//    }
+//
+//    private static ArrayList<String> splitOnSpace(String line) {
+//        String[] splits = line.split(" ");
+//        return new ArrayList<>(Arrays.asList(splits));
+//    }
+
 
     public Map<Food,Integer> getHave() {
         return have;

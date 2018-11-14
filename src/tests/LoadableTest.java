@@ -35,7 +35,7 @@ public class LoadableTest {
         lines.add("oranges 5 FRUIT");
         lines.add("wine 1 OTHER");
         Files.write(Paths.get("needbuy.txt"), lines);
-        s.loadBuy();
+        s.load();
         assertEquals((Integer)6, s.getNeedbuy().get(new Food("Egg", FoodCategory.MEAT)));
 
     }

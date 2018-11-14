@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.InvalidationListener;
 import model.exceptions.CategoryException;
 
 import java.io.IOException;
@@ -10,28 +11,34 @@ import java.nio.file.Paths;
 import java.util.*;
 
 
-public class GroceryManager implements Loadable, Saveable {
+public class GroceryManager extends Observable implements Loadable, Saveable {
     private Map<Food, Integer> needbuy;
     private Refrigerator r;
     private Freezer fr;
     private Cupboard c;
 
-    public GroceryManager() {
+    public GroceryManager() //throws IOException, CategoryException
+     {
         needbuy = new HashMap<>();
+//        load();
         r = new Refrigerator(0);
         fr = new Freezer(0);
         c = new Cupboard(0);
+
+        addObserver(r);
+        addObserver(fr);
+        addObserver(c);
     }
 
     //MODIFIES: needbuy list
     //EFFECTS: adds a food item to the needbuy list
     public void addFoodBuy(Food food, int amount) {
         int n = amount;
-        if(needbuy.containsKey(food)) {
-            if(amount == 0) {
+        if (needbuy.containsKey(food)) {
+            if (amount == 0) {
                 return;
             }
-            n = needbuy.get(food)+n;
+            n = needbuy.get(food) + n;
         }
         needbuy.put(food, n);
     }
@@ -49,13 +56,20 @@ public class GroceryManager implements Loadable, Saveable {
         switch (stored.toLowerCase()) {
             case "cupboard":
                 c.addToStorage(item, amount);
+                setChanged();
+                notifyObservers("cupboard");
                 break;
             case "fridge":
                 r.addToStorage(item, amount);
+                setChanged();
+                notifyObservers("fridge");
                 break;
             case "freezer":
                 fr.addToStorage(item, amount);
+                setChanged();
+                notifyObservers("freezer");
                 break;
+
         }
     }
 
@@ -82,7 +96,23 @@ public class GroceryManager implements Loadable, Saveable {
         this.needbuy = needbuy;
     }
 
-    public void loadBuy() throws IOException, CategoryException {
+
+    //EFFECTS: checks the capacity of a storage
+    public void checkCapacity(String stored){
+        switch (stored.toLowerCase()) {
+            case "cupboard":
+                System.out.println(c.getCapacity()+"%");
+                break;
+            case "fridge":
+                System.out.println(r.getCapacity()+"%");
+                break;
+            case "freezer":
+                System.out.println(fr.getCapacity()+"%");
+                break;
+        }
+    }
+
+    public void load() throws IOException, CategoryException {
         Path path = Paths.get("needbuy.txt");
         loadNeedBuy(path);
 
@@ -96,7 +126,7 @@ public class GroceryManager implements Loadable, Saveable {
         loadEachStorageList(path, c);
     }
 
-    private void loadNeedBuy(Path path) throws IOException, CategoryException{
+    private void loadNeedBuy(Path path) throws IOException, CategoryException {
         List<String> lines = Files.readAllLines(path);//create two input files one bought and needbuy
         for (String s : lines) {
             ArrayList<String> partsofLine = splitOnSpace(s);
@@ -128,47 +158,45 @@ public class GroceryManager implements Loadable, Saveable {
     }
 
 
-    public void saveBuy() throws IOException {
+    public void save() throws IOException {
         PrintWriter writer = new PrintWriter("needbuy.txt", "UTF-8");
         for (Map.Entry<Food, Integer> f : needbuy.entrySet()) {
             writer.println(f.getKey().getName() + " " + f.getValue() + " " + f.getKey().getCategory() + " ");
         }
         writer.close();
 
-        writer = new PrintWriter("freezer.txt", "UTF-8");
-        saveStorageList(writer, fr.getHave());
+        saveStorageList("freezer.txt", fr.getHave());
 
-        writer = new PrintWriter("fridge.txt", "UTF-8");
-        saveStorageList(writer, r.getHave());
+        saveStorageList("fridge.txt", r.getHave());
 
-        writer = new PrintWriter("cupboard.txt", "UTF-8");
-        saveStorageList(writer, c.getHave());
+        saveStorageList("cupboard.txt", c.getHave());
     }
 
-    private void saveStorageList(PrintWriter writer, Map<Food, Integer> have) {
+    private void saveStorageList(String filename, Map<Food, Integer> have) throws IOException {
+        PrintWriter writer = new PrintWriter(filename, "UTF-8");
         for (Food f : have.keySet()) {
             writer.println(f.getName() + " " + f.getAmount() + " " + f.getCategory());
         }
         writer.close();
     }
 
+
+    public void printInFridge() {
+        r.print();
+        System.out.println(" is in your fridge");
+    }
+
+    public void printInFreezer() {
+        fr.print();
+        System.out.println(" is in your freezer");
+    }
+
+    public void printInCupboard() {
+        c.print();
+        System.out.println(" is in your cupboard");
+    }
+
 }
-
-//    public void printInFridge(){
-//        r.print();
-//        System.out.println(" is in your fridge");
-//    }
-//
-//    public void printInFreezer(){
-//        fr.print();
-//        System.out.println(" is in your freezer");
-//    }
-//
-//    public void printInCupboard(){
-//        c.print();
-//        System.out.println(" is in your cupboard");
-//    }
-
      //TODO goShopping function goes through needbuy and adds it to fridge
     //for each item food.getName()
     //

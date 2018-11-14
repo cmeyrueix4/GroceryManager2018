@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class Cupboard extends Storage{
 
     public Cupboard(int capacity) {

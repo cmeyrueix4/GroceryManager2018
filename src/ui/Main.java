@@ -12,11 +12,11 @@ public class Main {
     public static void main(String[] args) throws IOException, CategoryException {
         GroceryManager groceryList = new GroceryManager();
         String operation;
-        groceryList.loadBuy();
+        groceryList.load();
 
         while (true) {
 
-            System.out.println("Please type an option: buy, bought, view, or quit");
+            System.out.println("Please type an option: buy, bought, view, capacity, or quit");
             operation = scanner.nextLine();
             System.out.println("you selected: " + operation);
 
@@ -85,8 +85,14 @@ public class Main {
             else if (operation.equals("view")) {
                 groceryList.printToBuy();
                 groceryList.printPurchased();
-            } else if (operation.equals("quit")) {
-                groceryList.saveBuy();
+            }
+            else if(operation.equals("capacity")){
+                System.out.println("Please enter what storage you would like to check: fridge, freezer, or cupboard");
+                String stored = scanner.nextLine();
+                groceryList.checkCapacity(stored);
+            }
+            else if (operation.equals("quit")) {
+                groceryList.save();
                 break;
             }
         }

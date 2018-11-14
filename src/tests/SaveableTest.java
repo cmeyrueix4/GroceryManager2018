@@ -28,8 +28,8 @@ public class SaveableTest {
 
     @Test
     public void testSaveBuy() throws IOException, CategoryException {
-        s.addFoodToBuy(new Food("Egg", FoodCategory.MEAT), 6);
-        s.saveBuy();
+        s.addFoodBuy(new Food("Egg", FoodCategory.MEAT), 6);
+        s.save();
 
 
         List<String> y = Files.readAllLines(Paths.get("needbuy.txt"));

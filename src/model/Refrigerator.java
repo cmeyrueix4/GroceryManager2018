@@ -1,11 +1,9 @@
 package model;
 
-
-import java.util.ArrayList;
-
 public class Refrigerator extends Storage{
 
     public Refrigerator(int capacity){
+//        super(capacity, "fridge.txt");
         super(capacity);
     }
 
@@ -13,9 +11,6 @@ public class Refrigerator extends Storage{
     public void label() {
         System.out.println("In your fridge you have: ");
     }
-
-    //add to have do inFridge, if not add
-
 }
 
 //    private boolean inFridge(String name){
