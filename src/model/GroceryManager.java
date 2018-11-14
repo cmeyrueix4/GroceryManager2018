@@ -1,7 +1,7 @@
 package model;
 
-import javafx.beans.InvalidationListener;
 import model.exceptions.CategoryException;
+import ui.Main;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     private Freezer fr;
     private Cupboard c;
 
-    public GroceryManager() //throws IOException, CategoryException
-     {
+    public GroceryManager(){
         needbuy = new HashMap<>();
 //        load();
         r = new Refrigerator(100);
@@ -42,6 +41,11 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
         }
         needbuy.put(food, n);
     }
+
+//    //EFFECTS: removes an item from the needbuy list
+//    public void removeNeedBuy(Food food){
+//
+//    }
 
     //EFFECTS: creates a new Food item
     public Food createFoodItem(String name, String category) throws CategoryException {
@@ -77,7 +81,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     public void printToBuy() {
         System.out.println("You need to buy ");
         for (Map.Entry<Food, Integer> f : needbuy.entrySet()) {
-            System.out.println(f.getValue() + " " + f.getKey().getName());
+            System.out.println("\t" +f.getValue() + " " + f.getKey().getName());
         }
     }
 
@@ -101,15 +105,29 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     public void checkCapacity(String stored){
         switch (stored.toLowerCase()) {
             case "cupboard":
-                System.out.println(c.getCapacity()+"%");
+                System.out.println(c.getCapacity()+"% storage left");
                 break;
             case "fridge":
-                System.out.println(r.getCapacity()+"%");
+                System.out.println(r.getCapacity()+"% storage left");
                 break;
             case "freezer":
-                System.out.println(fr.getCapacity()+"%");
+                System.out.println(fr.getCapacity()+"% storage left");
                 break;
         }
+    }
+
+
+    // TODO: 11/14/2018  
+    //REQUIRES: needbuy to not be empty
+    //MODIFIES: this
+    //EFFECTS: removes items from needbuy list and stores them in the proper storage
+    public void goShopping(){
+        for (Map.Entry<Food, Integer> n : needbuy.entrySet()) {
+            System.out.println("Please enter where " + n.getKey().getName() + " should be stored: fridge, freezer, or cupboard");
+            String stored = Main.scanner.nextLine();
+            addFoodBought(stored, n.getKey(), n.getValue());
+        }
+        needbuy.clear();
     }
 
     public void load() throws IOException, CategoryException {
@@ -197,25 +215,3 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     }
 
 }
-     //TODO goShopping function goes through needbuy and adds it to fridge
-    //for each item food.getName()
-    //
-//    public void boughtShopping(String name) {
-//        int index= -1;
-//        for (int i = 0; i < needbuy.size(); i++) {
-//            if needbuy.get(i).getName() = name
-//                    index = i;
-//        }
-//        if (index !=-1){
-//            needbuy.remove(index);
-//        }
-//    }
-//        if(needbuy.contains(food.getName()) && food.getName().equals(name)){
-//            needbuy.remove(food);
-//        }
-
-
-
-
-//        for (Food f: needbuy, c.getHave(), r.getHave(), fr.getHave())
-//            if( )

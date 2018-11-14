@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException, CategoryException {
         GroceryManager groceryList = new GroceryManager();
@@ -16,7 +16,7 @@ public class Main {
 
         while (true) {
 
-            System.out.println("Please type an option: buy, bought, view, capacity, or quit");
+            System.out.println("Please type an option: buy, bought, view, capacity, went shopping, or quit");
             operation = scanner.nextLine();
             System.out.println("you selected: " + operation);
 
@@ -50,6 +50,7 @@ public class Main {
 
                 groceryList.addFoodBuy(newFoodItem, amt);
                 System.out.println("You need to buy " + newFoodItem.getName() + " in the quantity of: " + amt);
+                groceryList.save();
 
 
             } else if (operation.equals("bought")) {
@@ -79,6 +80,7 @@ public class Main {
                 System.out.println("Please enter where it should be stored: fridge, freezer, or cupboard");
                 String stored = scanner.nextLine();
                 groceryList.addFoodBought(stored, newFoodItem, amt);
+                groceryList.save();
             }
 
             //add storage todo
@@ -91,6 +93,11 @@ public class Main {
                 String stored = scanner.nextLine();
                 groceryList.checkCapacity(stored);
             }
+
+            else if(operation.equals("went shopping")){
+                groceryList.goShopping();
+            }
+
             else if (operation.equals("quit")) {
                 groceryList.save();
                 break;
@@ -99,7 +106,6 @@ public class Main {
         groceryList.printToBuy();
         groceryList.printPurchased();
     }
-
 
 
 }

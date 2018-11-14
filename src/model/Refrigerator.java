@@ -1,5 +1,9 @@
 package model;
 
+import model.exceptions.CategoryException;
+
+import java.io.IOException;
+
 public class Refrigerator extends Storage{
 
     public Refrigerator(int capacity){

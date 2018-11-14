@@ -5,19 +5,41 @@ import model.exceptions.CategoryException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public abstract class Storage implements Observer {
 
     protected int capacity;
     protected Map<Food, Integer> have;
+    protected String textFile;
 
-    public Storage(int capacity) //throws IOExceptions, CategoryException
-     {
+    public Storage(int capacity) {
+//        this.textFile = textFile;
         this.capacity = capacity;
         this.have = new HashMap<>();
 //        load();
     }
+
+
+//    private void load(Path path) throws IOException, CategoryException {
+//        Path path = Paths.get(textFile);
+//        List<String> lines;
+//        lines = Files.readAllLines(path);//create two input files one bought and needbuy
+//        for (String s : lines) {
+//            ArrayList<String> partsofLine = splitOnSpace(s);
+//            String name = partsofLine.get(0);
+//            int amount = Integer.parseInt(partsofLine.get(1));
+//            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
+//            Food f = new Food(name, category);
+//            st.addToStorage(f, amount);
+//        }
+//    }
+
+//    private static ArrayList<String> splitOnSpace(String line) {
+//        String[] splits = line.split(" ");
+//        return new ArrayList<>(Arrays.asList(splits));
+//    }
 
     @Override
     public void update(Observable o, Object arg){
@@ -112,29 +134,9 @@ public abstract class Storage implements Observer {
     public void print() {
         label();
         for (Map.Entry<Food, Integer> e : have.entrySet()) {
-            System.out.println(e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
+            System.out.println("\t" +e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
         }
     }
-
-
-
-//    private void load(Path path) throws IOException, CategoryException {
-//        List<String> lines;
-//        lines = Files.readAllLines(path);//create two input files one bought and needbuy
-//        for (String s : lines) {
-//            ArrayList<String> partsofLine = splitOnSpace(s);
-//            String name = partsofLine.get(0);
-//            int amount = Integer.parseInt(partsofLine.get(1));
-//            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
-//            Food f = new Food(name, category);
-//            addToStorage(f, amount);
-//        }
-//    }
-//
-//    private static ArrayList<String> splitOnSpace(String line) {
-//        String[] splits = line.split(" ");
-//        return new ArrayList<>(Arrays.asList(splits));
-//    }
 
 
     public Map<Food,Integer> getHave() {
@@ -154,15 +156,3 @@ public abstract class Storage implements Observer {
     }
 
 }
-
-//
-//
-//    //EFFECTS returns the index number of a food in have, if not in list returns -1
-//    public int getFoodIndex(String name) {
-//        for (int i = 0; i < have.size(); i++) {
-//            if (have.get(i).getName().equals(name)) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
