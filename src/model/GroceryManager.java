@@ -21,9 +21,9 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
      {
         needbuy = new HashMap<>();
 //        load();
-        r = new Refrigerator(0);
-        fr = new Freezer(0);
-        c = new Cupboard(0);
+        r = new Refrigerator(100);
+        fr = new Freezer(100);
+        c = new Cupboard(100);
 
         addObserver(r);
         addObserver(fr);

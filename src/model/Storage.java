@@ -16,8 +16,6 @@ public abstract class Storage implements Observer {
      {
         this.capacity = capacity;
         this.have = new HashMap<>();
-//        setCapacity(100);
-//        decreaseCapacity();
 //        load();
     }
 
@@ -38,6 +36,8 @@ public abstract class Storage implements Observer {
         }
         this.have.put(food, n);
         food.setStorage(this);
+
+        decreaseCapacity(food);
     }
 
     public abstract void label();
@@ -98,13 +98,14 @@ public abstract class Storage implements Observer {
     //REQUIRES: an item to be in storage
     //MODIFIES: this
     //EFFECTS: when an item is added to storage, capacity is increased based on amount
-    public void decreaseCapacity() {
-        for (Map.Entry<Food, Integer> e : have.entrySet()) {
-            for (int i = 0; i <= e.getValue(); i++) {
-                this.capacity = -1;
-            }
-        }
+    public void decreaseCapacity(Food food) {
+//        for (Map.Entry<Food, Integer> e : have.entrySet()) {
+//        for (int i = 0; i <= food.getAmount(); i++) {
+            capacity = capacity - food.getAmount();
+
     }
+
+
 
 
     //EFFECTS: prints the items in the storage
