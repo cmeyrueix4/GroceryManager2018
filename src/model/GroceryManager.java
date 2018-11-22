@@ -19,7 +19,6 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
 
     public GroceryManager(){
         needbuy = new HashMap<>();
-//        load();
         r = new Refrigerator(100);
         fr = new Freezer(100);
         c = new Cupboard(100);
@@ -42,16 +41,13 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
         needbuy.put(food, n);
     }
 
-//    //EFFECTS: removes an item from the needbuy list
-//    public void removeNeedBuy(Food food){
-//
-//    }
-
     //EFFECTS: creates a new Food item
     public Food createFoodItem(String name, String category) throws CategoryException {
         FoodCategory cat = FoodCategory.parseCategory(category);
         return new Food(name, cat);
     }
+
+    //class called logging which would be an observer, addobserver
 
     //MODIFIES: have list in either a freezer, fridge or cupboard
     //EFFECTS: adds a food item to the have list in either a freezer, cupboard, or fridge
@@ -116,8 +112,6 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
         }
     }
 
-
-    // TODO: 11/14/2018  
     //REQUIRES: needbuy to not be empty
     //MODIFIES: this
     //EFFECTS: removes items from needbuy list and stores them in the proper storage
@@ -147,7 +141,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     private void loadNeedBuy(Path path) throws IOException, CategoryException {
         List<String> lines = Files.readAllLines(path);//create two input files one bought and needbuy
         for (String s : lines) {
-            ArrayList<String> partsofLine = splitOnSpace(s);
+            ArrayList<String> partsofLine = splitOnComma(s);
             String name = partsofLine.get(0);
             int amount = Integer.parseInt(partsofLine.get(1));
             FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
@@ -160,7 +154,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
         List<String> lines;
         lines = Files.readAllLines(path);//create two input files one bought and needbuy
         for (String s : lines) {
-            ArrayList<String> partsofLine = splitOnSpace(s);
+            ArrayList<String> partsofLine = splitOnComma(s);
             String name = partsofLine.get(0);
             int amount = Integer.parseInt(partsofLine.get(1));
             FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
@@ -170,8 +164,8 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     }
 
 
-    private static ArrayList<String> splitOnSpace(String line) {
-        String[] splits = line.split(" ");
+    private static ArrayList<String> splitOnComma(String line) {
+        String[] splits = line.split(", ");
         return new ArrayList<>(Arrays.asList(splits));
     }
 
@@ -179,7 +173,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     public void save() throws IOException {
         PrintWriter writer = new PrintWriter("needbuy.txt", "UTF-8");
         for (Map.Entry<Food, Integer> f : needbuy.entrySet()) {
-            writer.println(f.getKey().getName() + " " + f.getValue() + " " + f.getKey().getCategory() + " ");
+            writer.println(f.getKey().getName() + ", " + f.getValue() + ", " + f.getKey().getCategory() + ", ");
         }
         writer.close();
 
@@ -193,7 +187,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     private void saveStorageList(String filename, Map<Food, Integer> have) throws IOException {
         PrintWriter writer = new PrintWriter(filename, "UTF-8");
         for (Food f : have.keySet()) {
-            writer.println(f.getName() + " " + f.getAmount() + " " + f.getCategory());
+            writer.println(f.getName() + ", " + f.getAmount() + ", " + f.getCategory()+ ", ");
         }
         writer.close();
     }

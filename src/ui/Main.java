@@ -1,15 +1,37 @@
 package ui;
 
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.*;
 import model.exceptions.CategoryException;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Main {
+import static javafx.application.Application.launch;
+
+public class Main extends Application{
     public static Scanner scanner = new Scanner(System.in);
 
+    private Stage primaryStage;
+    private Pane mainLayout;
+    private Pane buyLayout;
+    private Pane storageLayout;
+
     public static void main(String[] args) throws IOException, CategoryException {
+       // createAndShowGUI();
+        //GroceryPanel showScreen = new GroceryPanel();
+        //showScreen.start();
+        launch(args);
         GroceryManager groceryList = new GroceryManager();
         String operation;
         groceryList.load();
@@ -83,7 +105,6 @@ public class Main {
                 groceryList.save();
             }
 
-            //add storage todo
             else if (operation.equals("view")) {
                 groceryList.printToBuy();
                 groceryList.printPurchased();
@@ -107,6 +128,38 @@ public class Main {
         groceryList.printPurchased();
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("GUI.fxml"));
+        mainLayout = loader.load();
+        FXMLLoader loader2 = new FXMLLoader();
+        loader.setLocation(getClass().getResource("buy.fxml"));
+        buyLayout = loader2.load();
+        GroceryPanel controller = loader.getController();
+        controller.list = new GroceryManager();
+        controller.stage = primaryStage;
+        primaryStage.setTitle("À Table");
+        primaryStage.setScene(new Scene(mainLayout, 500,500));
+        primaryStage.show();
+
+    }
+
+//    private void initializeGraphics(){
+//        setLayout(new BorderLayout());
+//        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setLocationRelativeTo(null);
+//        setVisible(true);
+//    }
+//
+//    private static void createAndShowGUI(){
+//        JFrame frame = new JFrame("GroceryManager");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//
+//        frame.pack();
+//        frame.setVisible(true);
+//    }
 
 }
 

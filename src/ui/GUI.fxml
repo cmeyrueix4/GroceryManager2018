@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GroceryPanel">
+   <children>
+      <ImageView fx:id="background" fitHeight="405.0" fitWidth="614.0" layoutX="-5.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Documents/UBC%20Semester%203/CPSC%20121/84211196-food-cooking-background-white-marble-table-fresh-raw-organic-vegetables-tomatoes-peppers-mushrooms-o.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="title" fitHeight="156.0" fitWidth="616.0" layoutX="-8.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Documents/UBC%20Semester%203/CPSC%20121/To%20the%20Table.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="42.0" layoutY="202.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="215.0" text="What do I need to buy?">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="366.0" layoutY="203.0" mnemonicParsing="false" text="I bought something!">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="95.0" layoutY="267.0" mnemonicParsing="false" text="View all">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="428.0" layoutY="270.0" mnemonicParsing="false" onMouseClicked="#quit" text="Quit">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

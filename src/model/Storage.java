@@ -1,49 +1,21 @@
 package model;
 
-import model.exceptions.CategoryException;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 public abstract class Storage implements Observer {
 
     protected int capacity;
     protected Map<Food, Integer> have;
-    protected String textFile;
 
     public Storage(int capacity) {
-//        this.textFile = textFile;
         this.capacity = capacity;
         this.have = new HashMap<>();
-//        load();
     }
 
-
-//    private void load(Path path) throws IOException, CategoryException {
-//        Path path = Paths.get(textFile);
-//        List<String> lines;
-//        lines = Files.readAllLines(path);//create two input files one bought and needbuy
-//        for (String s : lines) {
-//            ArrayList<String> partsofLine = splitOnSpace(s);
-//            String name = partsofLine.get(0);
-//            int amount = Integer.parseInt(partsofLine.get(1));
-//            FoodCategory category = FoodCategory.parseCategory(partsofLine.get(2));
-//            Food f = new Food(name, category);
-//            st.addToStorage(f, amount);
-//        }
-//    }
-
-//    private static ArrayList<String> splitOnSpace(String line) {
-//        String[] splits = line.split(" ");
-//        return new ArrayList<>(Arrays.asList(splits));
-//    }
-
     @Override
-    public void update(Observable o, Object arg){
-        System.out.println("An item has been added to" + arg);
+    public void update(Observable o, Object type) {
+        //check if the storage has this type
+        System.out.println("An item has been added to " + type);
     }
 
     //MODIFIES: this
@@ -123,23 +95,21 @@ public abstract class Storage implements Observer {
     public void decreaseCapacity(Food food) {
 //        for (Map.Entry<Food, Integer> e : have.entrySet()) {
 //        for (int i = 0; i <= food.getAmount(); i++) {
-            capacity = capacity - food.getAmount();
+        capacity = capacity - food.getAmount();
 
     }
-
-
 
 
     //EFFECTS: prints the items in the storage
     public void print() {
         label();
         for (Map.Entry<Food, Integer> e : have.entrySet()) {
-            System.out.println("\t" +e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
+            System.out.println("\t" + e.getKey().getName() + " " + e.getKey().getCategory() + ": " + e.getValue());
         }
     }
 
 
-    public Map<Food,Integer> getHave() {
+    public Map<Food, Integer> getHave() {
         return have;
     }
 
