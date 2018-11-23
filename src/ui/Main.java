@@ -19,19 +19,17 @@ import java.util.Scanner;
 
 import static javafx.application.Application.launch;
 
-public class Main extends Application{
+public class Main {
     public static Scanner scanner = new Scanner(System.in);
 
     private Stage primaryStage;
-    private Pane mainLayout;
-    private Pane buyLayout;
-    private Pane storageLayout;
+    public Pane mainLayout;
 
     public static void main(String[] args) throws IOException, CategoryException {
        // createAndShowGUI();
         //GroceryPanel showScreen = new GroceryPanel();
         //showScreen.start();
-        launch(args);
+//        launch(args);
         GroceryManager groceryList = new GroceryManager();
         String operation;
         groceryList.load();
@@ -128,37 +126,26 @@ public class Main extends Application{
         groceryList.printPurchased();
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("GUI.fxml"));
-        mainLayout = loader.load();
-        FXMLLoader loader2 = new FXMLLoader();
-        loader.setLocation(getClass().getResource("buy.fxml"));
-        buyLayout = loader2.load();
-        GroceryPanel controller = loader.getController();
-        controller.list = new GroceryManager();
-        controller.stage = primaryStage;
-        primaryStage.setTitle("À Table");
-        primaryStage.setScene(new Scene(mainLayout, 500,500));
-        primaryStage.show();
-
-    }
-
-//    private void initializeGraphics(){
-//        setLayout(new BorderLayout());
-//        setMinimumSize(new Dimension(WIDTH, HEIGHT));
-//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        setLocationRelativeTo(null);
-//        setVisible(true);
-//    }
+//    @Override
+//    public void start(Stage primaryStage) throws Exception {
+//        FXMLLoader loader = new FXMLLoader();
+//        loader.setLocation(getClass().getResource("MainScreen.fxml"));
+//        mainLayout = loader.load();
+////        FXMLLoader loader2 = new FXMLLoader();
+////        loader2.setLocation(getClass().getResource("NeedToBuyScreen.fxml"));
+////        buyLayout = loader2.load();
+//        GroceryPanel controller = loader.getController();
+//        controller.list = new GroceryManager();
+//        controller.stage = primaryStage;
+//        primaryStage.setTitle("À Table");
+//        primaryStage.setScene(new Scene(mainLayout, 500,500));
+//        primaryStage.show();
 //
-//    private static void createAndShowGUI(){
-//        JFrame frame = new JFrame("GroceryManager");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+//        primaryStage.setTitle("TEMP");
+//        primaryStage.setScene(new Scene(root));
+//        primaryStage.show();
 //
-//        frame.pack();
-//        frame.setVisible(true);
 //    }
 
 }

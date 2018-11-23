@@ -4,11 +4,15 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -22,36 +26,76 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.GroceryManager;
+import model.exceptions.CategoryException;
 
 import java.io.IOException;
 
-public class GroceryPanel {
+import static javafx.application.Application.launch;
 
-    ImageView title, background;
+public class GroceryPanel extends Application{
 
-    GroceryManager list;
-    public Stage stage;
+    public ImageView title, background;
 
-    @FXML
-    public void onBuy() {
-        //stage.setScene(new Scene(buyLayout));
+    public static GroceryManager list = new GroceryManager();
+
+    public static void main(String[] args) throws IOException, CategoryException {
+        list.load();
+        launch(args);
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        primaryStage.setTitle("TEMP");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
+    }
+
+    //Change scene
+    @FXML
+    public void changeScreenNeedToBuy(ActionEvent event) throws IOException {
+//        FXMLLoader loader2 = new FXMLLoader();
+//        loader2.setLocation(getClass().getResource("NeedToBuyScreen.fxml"));
+//        buyLayout = loader2.load();
+        Parent myParent = FXMLLoader.load(getClass().getResource("NeedToBuyScreen.fxml"));
+        Scene newScence = new Scene(myParent);
+        Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+        appStage.setScene(newScence);
+        appStage.show();
+    }
 
     @FXML
-    public void quit() {
-        // end app
+    public void quit(ActionEvent event) throws IOException {
         try {
             list.save();
-        } catch (IOException e) {
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-        stage.close();
+        Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+        appStage.close();
     }
 
     @FXML
     public void initialize() {
         
     }
+
+    @FXML
+    private void printNeedOutput(){
+
+    }
+
+
+    //    @FXML
+////    public void quit() {
+////        // end app
+////        try {
+////            list.save();
+////        } catch (IOException e) {
+////        }
+////        Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+////        stage.close();
+////    }
 
 //    private GroceryManager groceryManager = new GroceryManager();
 
