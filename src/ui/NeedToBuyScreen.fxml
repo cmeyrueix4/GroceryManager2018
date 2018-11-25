@@ -21,7 +21,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TextField fx:id="needOutput" layoutX="260.0" layoutY="98.0" prefHeight="282.0" prefWidth="326.0" />
+      <TextArea fx:id="needOutput" editable="false" layoutX="260.0" layoutY="98.0" prefHeight="282.0" prefWidth="326.0" />
       <TextField fx:id="needFoodInput" layoutX="20.0" layoutY="131.0" prefHeight="14.0" prefWidth="184.0">
          <font>
             <Font size="14.0" />
@@ -37,7 +37,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="7.0" layoutY="361.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="94.0" text="Main Menu">
+      <Button fx:id="mainMenu" layoutX="7.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#backToMainScreen" prefHeight="25.0" prefWidth="94.0" text="Main Menu">
          <font>
             <Font size="14.0" />
          </font>

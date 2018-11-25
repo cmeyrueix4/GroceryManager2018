@@ -4,12 +4,18 @@ import java.util.*;
 
 public abstract class Storage implements Observer {
 
-    protected int capacity;
+    protected double capacity;
     protected Map<Food, Integer> have;
 
-    public Storage(int capacity) {
+    public Storage(double capacity) {
         this.capacity = capacity;
         this.have = new HashMap<>();
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(have);
     }
 
     @Override
@@ -117,7 +123,7 @@ public abstract class Storage implements Observer {
         this.have = have;
     }
 
-    public int getCapacity() {
+    public double getCapacity() {
         return capacity;
     }
 

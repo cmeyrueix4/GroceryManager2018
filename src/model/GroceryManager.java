@@ -208,4 +208,15 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
         System.out.println(" is in your cupboard");
     }
 
+    public Refrigerator getR() {
+        return r;
+    }
+
+    public Freezer getFr() {
+        return fr;
+    }
+
+    public Cupboard getC() {
+        return c;
+    }
 }

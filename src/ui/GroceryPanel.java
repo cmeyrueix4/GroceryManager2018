@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import model.GroceryManager;
 import model.exceptions.CategoryException;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import static javafx.application.Application.launch;
@@ -46,7 +47,7 @@ public class GroceryPanel extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-        primaryStage.setTitle("TEMP");
+        primaryStage.setTitle("À Table");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
@@ -54,13 +55,19 @@ public class GroceryPanel extends Application{
     //Change scene
     @FXML
     public void changeScreenNeedToBuy(ActionEvent event) throws IOException {
-//        FXMLLoader loader2 = new FXMLLoader();
-//        loader2.setLocation(getClass().getResource("NeedToBuyScreen.fxml"));
-//        buyLayout = loader2.load();
         Parent myParent = FXMLLoader.load(getClass().getResource("NeedToBuyScreen.fxml"));
-        Scene newScence = new Scene(myParent);
+        Scene newScene = new Scene(myParent);
         Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
-        appStage.setScene(newScence);
+        appStage.setScene(newScene);
+        appStage.show();
+    }
+
+    @FXML
+    public void changeScreenBought(ActionEvent event) throws IOException {
+        Parent myParent = FXMLLoader.load(getClass().getResource("Storages.fxml"));
+        Scene newScene = new Scene(myParent);
+        Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+        appStage.setScene(newScene);
         appStage.show();
     }
 
@@ -78,11 +85,6 @@ public class GroceryPanel extends Application{
     @FXML
     public void initialize() {
         
-    }
-
-    @FXML
-    private void printNeedOutput(){
-
     }
 
 
@@ -180,4 +182,8 @@ public class GroceryPanel extends Application{
 //        hb.getChildren().add(stack);            // Add stack pane to HBox object
 //        HBox.setHgrow(stack, Priority.ALWAYS);    // Give stack any extra space
 //    }
+
+    //        FXMLLoader loader2 = new FXMLLoader();
+//        loader2.setLocation(getClass().getResource("NeedToBuyScreen.fxml"));
+//        buyLayout = loader2.load();
 }
