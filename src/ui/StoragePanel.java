@@ -1,7 +1,6 @@
 package ui;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.Food;
@@ -30,10 +28,8 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
     private TableView<Map.Entry<Food, Integer>> freezerTable = new TableView<>();
     @FXML
     private TableView<Map.Entry<Food, Integer>> cupboardTable = new TableView<>();
-
     @FXML
     private GroceryPanel gp = new GroceryPanel();
-
     @FXML
     private TextField fridgeNameInput;
     @FXML
@@ -65,9 +61,6 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
     @FXML
     private ProgressBar cupboardCapacityBar;
 
-//    ObservableList<Map.Entry<Food, Integer>> items = FXCollections.observableArrayList(gp.list.getR().getHave().entrySet());
-//    ObservableList<Map.Entry<Food, Integer>> freezerItems = FXCollections.observableArrayList(gp.list.getFr().getHave().entrySet());
-//    ObservableList<Map.Entry<Food, Integer>> cupboardItems = FXCollections.observableArrayList(gp.list.getC().getHave().entrySet());
 
     @FXML
     public void initialize(){
@@ -282,71 +275,6 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
         Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         appStage.setScene(newScene);
         appStage.show();
-    }
-
-    class EditingCell extends TableCell<Food, String> {
-
-        private TextField textField;
-
-        private EditingCell() {
-        }
-
-        @Override
-        public void startEdit() {
-            if (!isEmpty()) {
-                super.startEdit();
-                createTextField();
-                setText(null);
-                setGraphic(textField);
-                textField.selectAll();
-            }
-        }
-
-        @Override
-        public void cancelEdit() {
-            super.cancelEdit();
-
-            setText((String) getItem());
-            setGraphic(null);
-        }
-
-        @Override
-        public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty) {
-                setText(item);
-                setGraphic(null);
-            } else {
-                if (isEditing()) {
-                    if (textField != null) {
-                        textField.setText(getString());
-//                        setGraphic(null);
-                    }
-                    setText(null);
-                    setGraphic(textField);
-                } else {
-                    setText(getString());
-                    setGraphic(null);
-                }
-            }
-        }
-
-        private void createTextField() {
-            textField = new TextField(getString());
-            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            textField.setOnAction((e) -> commitEdit(textField.getText()));
-            textField.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-                if (!newValue) {
-                    System.out.println("Commiting " + textField.getText());
-                    commitEdit(textField.getText());
-                }
-            });
-        }
-
-        private String getString() {
-            return getItem() == null ? "" : getItem();
-        }
     }
 
 }

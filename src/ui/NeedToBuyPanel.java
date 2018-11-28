@@ -67,12 +67,6 @@ public class NeedToBuyPanel {
         //populate the table
         populateNeed("Name", "Amount", "Category");
 
-        //populate the list
-//        ObservableMap<Food, Integer> needbuys = FXCollections.observableMap(groceryPanel.list.getNeedbuy());
-//        ObservableList<Food> neeeeedbuys = FXCollections.observableArrayList
-
-//        List<Food> foodList = new ListView<Food>();
-
     }
 
     @FXML
