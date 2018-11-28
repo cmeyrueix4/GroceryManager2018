@@ -1,11 +1,19 @@
 package ui;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import model.Food;
 import model.FoodCategory;
 import model.exceptions.CategoryException;
@@ -39,6 +47,12 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
     @FXML
     private TextField cupboardAmountInput;
     @FXML
+    private TextField fridgeRemoveInput;
+    @FXML
+    private TextField freezerRemoveInput;
+    @FXML
+    private TextField cupboardRemoveInput;
+    @FXML
     private ChoiceBox fridgeChoiceInput;
     @FXML
     private ChoiceBox freezerChoiceInput;
@@ -51,16 +65,27 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
     @FXML
     private ProgressBar cupboardCapacityBar;
 
+//    ObservableList<Map.Entry<Food, Integer>> items = FXCollections.observableArrayList(gp.list.getR().getHave().entrySet());
+//    ObservableList<Map.Entry<Food, Integer>> freezerItems = FXCollections.observableArrayList(gp.list.getFr().getHave().entrySet());
+//    ObservableList<Map.Entry<Food, Integer>> cupboardItems = FXCollections.observableArrayList(gp.list.getC().getHave().entrySet());
+
     @FXML
     public void initialize(){
         //create drop down menu
         fridgeChoiceInput.setItems(categories);
+        freezerChoiceInput.setItems(categories);
+        cupboardChoiceInput.setItems(categories);
 
         //populate tables
         populateR("Name", "Amount", "Category");
+        populateFr("Name", "Amount", "Category");
+        populateC("Name", "Amount", "Category");
 
         //initialize progress bars
         fridgeCapacityProgress();
+        freezerCapacityProgress();
+        cupboardCapacityProgress();
+
     }
 
     @FXML
@@ -71,20 +96,142 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
     }
 
     @FXML
-    private void createNewOutputItem() throws CategoryException, IOException {
+    private void freezerCapacityProgress(){
+        for (int i = 0; i < gp.list.getFr().getCapacity(); i++) {
+            freezerCapacityBar.setProgress(i/100.0);
+        }
+    }
+
+    @FXML
+    private void cupboardCapacityProgress(){
+        for (int i = 0; i < gp.list.getC().getCapacity(); i++) {
+            cupboardCapacityBar.setProgress(i/100.0);
+        }
+    }
+
+    @FXML
+    private void createNewOutputFridgeItem() throws CategoryException, IOException {
         Food item = gp.list.createFoodItem(fridgeNameInput.getText(), fridgeChoiceInput.getValue().toString());
         int amount = Integer.parseInt(fridgeAmountInput.getText());
-        gp.list.addFoodBought("fridge", item, amount);
+        gp.list.getR().addToStorage(item, amount);
         gp.list.save();
-        gp.list.load();
+        populateR("Name", "Amount", "Category");
 
         fridgeNameInput.clear();
         fridgeAmountInput.clear();
-        populateR("Name", "Amount", "Category");
-
+        fridgeCapacityProgress();
     }
 
+    @FXML
+    private void createNewOutputFreezerItem() throws CategoryException, IOException {
+        Food item = gp.list.createFoodItem(freezerNameInput.getText(), freezerChoiceInput.getValue().toString());
+        int amount = Integer.parseInt(freezerAmountInput.getText());
+        gp.list.addFoodBought("freezer", item, amount);
+        gp.list.save();
+        gp.list.save();
+        populateFr("Name", "Amount", "Category");
+
+        freezerNameInput.clear();
+        freezerAmountInput.clear();
+        freezerCapacityProgress();
+    }
+
+    @FXML
+    private void createNewOutputCupboardItem() throws CategoryException, IOException {
+        Food item = gp.list.createFoodItem(cupboardNameInput.getText(), cupboardChoiceInput.getValue().toString());
+        int amount = Integer.parseInt(cupboardAmountInput.getText());
+        gp.list.addFoodBought("cupboard", item, amount);
+        gp.list.save();
+        populateC("Name", "Amount", "Category");
+
+        cupboardNameInput.clear();
+        cupboardAmountInput.clear();
+        cupboardCapacityProgress();
+    }
+
+    @FXML
+    private void removeItemFridge() throws IOException {
+        if(fridgeRemoveInput.getText().isEmpty()) {
+            return;
+        }
+        int i = 0;
+        for(Map.Entry<Food, Integer> item : fridgeTable.getItems()) {
+            if(!fridgeTable.getSelectionModel().isSelected(i++)) {
+                continue;
+            }
+            System.out.println("Item selected for removal: "+item.getKey().getName());
+            int quantity = Integer.parseInt(fridgeRemoveInput.getText());
+            gp.list.getR().removeFromStorage(item.getKey(), quantity);
+        }
+        populateR("Name", "Amount", "Category");
+        fridgeCapacityProgress();
+        fridgeRemoveInput.clear();
+        gp.list.save();
+    }
+
+    @FXML
+    private void removeItemFreezer() throws IOException {
+        if(freezerRemoveInput.getText().isEmpty()) {
+            return;
+        }
+        int i = 0;
+        for(Map.Entry<Food, Integer> item : freezerTable.getItems()) {
+            if(!freezerTable.getSelectionModel().isSelected(i++)) {
+                continue;
+            }
+            System.out.println("Item selected for removal: "+item.getKey().getName());
+            int quantity = Integer.parseInt(freezerRemoveInput.getText());
+            gp.list.getFr().removeFromStorage(item.getKey(), quantity);
+        }
+        populateFr("Name", "Amount", "Category");
+        freezerCapacityProgress();
+        freezerRemoveInput.clear();
+        gp.list.save();
+    }
+
+    @FXML
+    private void removeItemCupboard() throws IOException {
+        if(cupboardRemoveInput.getText().isEmpty()) {
+            return;
+        }
+        int i = 0;
+        for(Map.Entry<Food, Integer> item : cupboardTable.getItems()) {
+            if(!cupboardTable.getSelectionModel().isSelected(i++)) {
+                continue;
+            }
+            System.out.println("Item selected for removal: "+item.getKey().getName());
+            int quantity = Integer.parseInt(cupboardRemoveInput.getText());
+            gp.list.getC().removeFromStorage(item.getKey(), quantity);
+        }
+        populateC("Name", "Amount", "Category");
+        cupboardCapacityProgress();
+        cupboardRemoveInput.clear();
+        gp.list.save();
+    }
+
+
     public void populateR(String name, String amount, String cat){
+        TableColumn<Map.Entry<Food, Integer>, String> Name = new TableColumn<>(name);
+        Name.setCellValueFactory(param -> {
+            return new SimpleObjectProperty<>(param.getValue().getKey().getName());
+        });
+
+        TableColumn<Map.Entry<Food, Integer>, Integer> Amount = new TableColumn<>(amount);
+        Amount.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
+
+        TableColumn<Map.Entry<Food, Integer>, FoodCategory> Cat = new TableColumn<>(cat);
+        Cat.setCellValueFactory(param -> {
+            return new SimpleObjectProperty<>(param.getValue().getKey().getCategory());
+        });
+
+        ObservableList<Map.Entry<Food, Integer>> items = FXCollections.observableArrayList(gp.list.getR().getHave().entrySet());
+        fridgeTable.setItems(items);
+        fridgeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        fridgeTable.getColumns().setAll(Name, Amount, Cat);
+        fridgeTable.setEditable(false);
+    }
+
+    public void populateFr(String name, String amount, String cat){
         TableColumn<Map.Entry<Food, Integer>, String> Name = new TableColumn<>(name);
         Name.setCellValueFactory(param -> {
             return new SimpleObjectProperty<String>(param.getValue().getKey().getName());
@@ -98,11 +245,110 @@ public class StoragePanel extends TableView<Map.Entry<Food, Integer>> {
             return new SimpleObjectProperty<FoodCategory>(param.getValue().getKey().getCategory());
         });
 
-        ObservableList<Map.Entry<Food, Integer>> items = FXCollections.observableArrayList(gp.list.getR().getHave().entrySet());
-        fridgeTable.setItems(items);
-        fridgeTable.getColumns().setAll(Name, Amount, Cat);
-        fridgeTable.setEditable(true);
+        ObservableList<Map.Entry<Food, Integer>> freezerItems = FXCollections.observableArrayList(gp.list.getFr().getHave().entrySet());
+        freezerTable.setItems(freezerItems);
+        freezerTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        freezerTable.getColumns().setAll(Name, Amount, Cat);
+        freezerTable.setEditable(false);
     }
+
+    public void populateC(String name, String amount, String cat){
+        TableColumn<Map.Entry<Food, Integer>, String> Name = new TableColumn<>(name);
+        Name.setCellValueFactory(param -> {
+            return new SimpleObjectProperty<String>(param.getValue().getKey().getName());
+        });
+
+        TableColumn<Map.Entry<Food, Integer>, Integer> Amount = new TableColumn<>(amount);
+        Amount.setCellValueFactory(param -> new SimpleObjectProperty<Integer>(param.getValue().getValue()));
+
+        TableColumn<Map.Entry<Food, Integer>, FoodCategory> Cat = new TableColumn<>(cat);
+        Cat.setCellValueFactory(param -> {
+            return new SimpleObjectProperty<FoodCategory>(param.getValue().getKey().getCategory());
+        });
+
+        ObservableList<Map.Entry<Food, Integer>> cupboardItems = FXCollections.observableArrayList(gp.list.getC().getHave().entrySet());
+        cupboardTable.setItems(cupboardItems);
+        cupboardTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        cupboardTable.getColumns().setAll(Name, Amount, Cat);
+        cupboardTable.setEditable(false);
+
+//        Cat.setCellFactory(TextFieldTableCell<Food>forTableColumn());
+    }
+
+    @FXML
+    public void backToMainScreen(MouseEvent event) throws IOException {
+        Parent myParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        Scene newScene = new Scene(myParent);
+        Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
+        appStage.setScene(newScene);
+        appStage.show();
+    }
+
+    class EditingCell extends TableCell<Food, String> {
+
+        private TextField textField;
+
+        private EditingCell() {
+        }
+
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+                createTextField();
+                setText(null);
+                setGraphic(textField);
+                textField.selectAll();
+            }
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+
+            setText((String) getItem());
+            setGraphic(null);
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(item);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getString());
+//                        setGraphic(null);
+                    }
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(getString());
+                    setGraphic(null);
+                }
+            }
+        }
+
+        private void createTextField() {
+            textField = new TextField(getString());
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.setOnAction((e) -> commitEdit(textField.getText()));
+            textField.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+                if (!newValue) {
+                    System.out.println("Commiting " + textField.getText());
+                    commitEdit(textField.getText());
+                }
+            });
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem();
+        }
+    }
+
 }
 
 

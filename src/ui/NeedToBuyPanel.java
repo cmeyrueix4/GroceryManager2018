@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -22,21 +23,28 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NeedToBuyPanel {
     ObservableList<String> categories = FXCollections.observableArrayList("DAIRY", "MEAT", "VEGETABLE", "FRUIT", "SWEETS", "GRAIN", "OTHER");
 
     private GroceryPanel groceryPanel = new GroceryPanel();
+    private AtomicBoolean first = new AtomicBoolean(true);
 
     @FXML
     private TextField needFoodInput;
     @FXML
     private TextField needAmountInput;
     @FXML
+    private TextField removeInput;
+    @FXML
     private TextArea needOutput;
     @FXML
     private ChoiceBox foodCategory;
+    @FXML
+    private TableView<Map.Entry<Food, Integer>> needTable = new TableView<>();
 
 
 
@@ -44,6 +52,7 @@ public class NeedToBuyPanel {
     private void initialize(){
         // create the drop down menu
         foodCategory.setItems(categories);
+
 
         //populate the textarea
         try {
@@ -55,8 +64,11 @@ public class NeedToBuyPanel {
             System.err.println(e);
         }
 
+        //populate the table
+        populateNeed("Name", "Amount", "Category");
+
         //populate the list
-        ObservableMap<Food, Integer> needbuys = FXCollections.observableMap(groceryPanel.list.getNeedbuy());
+//        ObservableMap<Food, Integer> needbuys = FXCollections.observableMap(groceryPanel.list.getNeedbuy());
 //        ObservableList<Food> neeeeedbuys = FXCollections.observableArrayList
 
 //        List<Food> foodList = new ListView<Food>();
@@ -69,7 +81,8 @@ public class NeedToBuyPanel {
         int amount = Integer.parseInt(needAmountInput.getText());
         groceryPanel.list.addFoodBuy(item, amount);
         groceryPanel.list.save();
-        needOutput.appendText(needFoodInput.getText() + ", " + needAmountInput.getText() + ", " + foodCategory.getValue().toString() + ", " + "\n");
+        populateNeed("Name", "Amount", "Category");
+//        needOutput.appendText(needFoodInput.getText() + ", " + needAmountInput.getText() + ", " + foodCategory.getValue().toString() + ", " + "\n");
         needFoodInput.clear();
         needAmountInput.clear();
     }
@@ -81,6 +94,40 @@ public class NeedToBuyPanel {
         Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         appStage.setScene(newScene);
         appStage.show();
+    }
+
+    @FXML
+    public void removeItemFromNeedBuy() throws CategoryException {
+        if(removeInput.getText().isEmpty()) {
+            return;
+        }
+        int i = 0;
+        for(Map.Entry<Food, Integer> item : needTable.getItems()) {
+            if(!needTable.getSelectionModel().isSelected(i++)) {
+                continue;
+            }
+            System.out.println("Item selected for removal: "+item.getKey().getName());
+            int quantity = Integer.parseInt(removeInput.getText());
+            groceryPanel.list.removeFromNeedBuy(item.getKey(), quantity);
+        }
+        populateNeed("Name", "Amount", "Category");
+    }
+
+    public void populateNeed(String name, String amount, String cat){
+        TableColumn<Map.Entry<Food, Integer>, String> Name = new TableColumn<>(name);
+        Name.setCellValueFactory(param -> new SimpleObjectProperty<String>(param.getValue().getKey().getName()));
+
+        TableColumn<Map.Entry<Food, Integer>, Integer> Amount = new TableColumn<>(amount);
+        Amount.setCellValueFactory(param -> new SimpleObjectProperty<Integer>(param.getValue().getValue()));
+
+        TableColumn<Map.Entry<Food, Integer>, FoodCategory> Cat = new TableColumn<>(cat);
+        Cat.setCellValueFactory(param -> new SimpleObjectProperty<FoodCategory>(param.getValue().getKey().getCategory()));
+
+        ObservableList<Map.Entry<Food, Integer>> items = FXCollections.observableArrayList(groceryPanel.list.getNeedbuy().entrySet());
+        needTable.setItems(items);
+        needTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        needTable.getColumns().setAll(Name, Amount, Cat);
+        needTable.setEditable(false);
     }
 
 }

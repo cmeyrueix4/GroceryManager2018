@@ -64,7 +64,7 @@ public class GroceryPanel extends Application{
 
     @FXML
     public void changeScreenBought(ActionEvent event) throws IOException {
-        Parent myParent = FXMLLoader.load(getClass().getResource("Storages.fxml"));
+        Parent myParent = FXMLLoader.load(getClass().getResource("Store.fxml"));
         Scene newScene = new Scene(myParent);
         Stage appStage = (Stage) (((Node) event.getSource()).getScene().getWindow());
         appStage.setScene(newScene);

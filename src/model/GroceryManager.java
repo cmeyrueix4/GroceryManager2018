@@ -47,6 +47,49 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
         return new Food(name, cat);
     }
 
+    //EFFECTS: checks to see if amount of food is null and returns 0, if not null then returns amount i
+    public int howMany(Food food) {
+        Integer i = needbuy.get(food);
+        if (i == null) {
+            return 0;
+        }
+        return i;
+    }
+
+    //EFFECTS: returns the amount of a given food
+    public int howMany(String name) {
+        for (Food h : needbuy.keySet()) {
+            if (h.getName().equals(name)) {
+                return howMany(h);
+            }
+        }
+        return 0;
+    }
+
+
+    //EFFECTS: removes an item from the needBuy list if quantity matches food amount, else just subtracts amount with quantity
+    public void removeFromNeedBuy(Food food, int quantity){
+
+        if(needbuy.containsKey(food)){
+            int current = howMany(food);
+            if (quantity == 0 || current == 0){
+                return;
+            }
+
+            current = current - quantity;
+//            if (quantity > current){
+//                current = 0;
+//            }
+            if(current > 0) {
+                needbuy.put(food, current);
+            } else {
+                needbuy.remove(food);
+            }
+
+            System.out.println(needbuy.get(food));
+        }
+    }
+
     //class called logging which would be an observer, addobserver
 
     //MODIFIES: have list in either a freezer, fridge or cupboard
@@ -187,7 +230,7 @@ public class GroceryManager extends Observable implements Loadable, Saveable {
     private void saveStorageList(String filename, Map<Food, Integer> have) throws IOException {
         PrintWriter writer = new PrintWriter(filename, "UTF-8");
         for (Food f : have.keySet()) {
-            writer.println(f.getName() + ", " + f.getAmount() + ", " + f.getCategory()+ ", ");
+            writer.println(f.getName() + ", " + f.getAmountS() + ", " + f.getCategory()+ ", ");
         }
         writer.close();
     }

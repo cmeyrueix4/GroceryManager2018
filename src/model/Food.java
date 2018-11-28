@@ -8,6 +8,7 @@ public class Food {
     private FoodCategory category;
     private String name;
     private Storage s;
+    private GroceryManager gm;
 
     public Food(String name, FoodCategory category) {
         this.name = name;
@@ -30,8 +31,12 @@ public class Food {
         this.name = name;
     }
 
-    public int getAmount() {
+    public int getAmountS() {
         return s.howMany(name);
+    }
+
+    public int getAmountN(){
+        return gm.howMany(name);
     }
 
     @Override
@@ -52,6 +57,10 @@ public class Food {
     public void setStorage(Storage s) {
         this.s = s;
         this.s.addToStorage(this, 0);
+    }
+
+    public void setGm(GroceryManager gm) {
+        this.gm = gm;
     }
 
 }

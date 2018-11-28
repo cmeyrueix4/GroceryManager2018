@@ -8,36 +8,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GroceryPanel">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.GroceryPanel">
    <children>
-      <ImageView fx:id="background" fitHeight="418.0" fitWidth="627.0" layoutX="-24.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="background" fitHeight="511.0" fitWidth="736.0" layoutX="-28.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/C:/Users/Cyrielle/IdeaProjects/projectw1_team311/84211196-food-cooking-background-white-marble-table-fresh-raw-organic-vegetables-tomatoes-peppers-mushrooms-o.jpg" />
          </image>
       </ImageView>
-      <ImageView fx:id="title" fitHeight="156.0" fitWidth="616.0" layoutX="-7.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="title" fitHeight="179.0" fitWidth="723.0" layoutX="-12.0" layoutY="-26.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="file:/C:/Users/Cyrielle/IdeaProjects/projectw1_team311/To%20the%20Table.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="buyButton" layoutX="42.0" layoutY="202.0" mnemonicParsing="false" onAction="#changeScreenNeedToBuy" prefHeight="35.0" prefWidth="215.0" text="What do I need to buy?">
+      <Button fx:id="buyButton" layoutX="50.0" layoutY="290.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#changeScreenNeedToBuy" text="What do I need to buy?">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="boughtButton" layoutX="366.0" layoutY="203.0" mnemonicParsing="false" onAction="#changeScreenBought" text="I bought something!">
+      <Button fx:id="boughtButton" layoutX="450.0" layoutY="290.0" mnemonicParsing="false" onAction="#changeScreenBought" text="I bought something!">
          <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button layoutX="95.0" layoutY="267.0" mnemonicParsing="false" text="View all">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="quitButton" layoutX="428.0" layoutY="270.0" mnemonicParsing="false" onAction="#quit" text="Quit">
-         <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Button>
    </children>

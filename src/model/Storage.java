@@ -28,10 +28,11 @@ public abstract class Storage implements Observer {
     //EFFECTS: adds a food to have list and decreases capacity in storage
     public void addToStorage(Food food, int quantity) {
         int n = quantity;
-        if (n == 0) {
-            return;
-        }
+
         if (this.have.containsKey(food)) {
+            if (n == 0) {
+                return;
+            }
             n = this.have.get(food) + n;
         }
         this.have.put(food, n);
@@ -39,6 +40,41 @@ public abstract class Storage implements Observer {
 
         decreaseCapacity(food);
     }
+
+    public void removeFromStorage(Food food, int quantity) {
+        if (have.containsKey(food)) {
+            int current = howMany(food);
+            if (quantity == 0 || current == 0) {
+                return;
+            }
+            current = current - quantity;
+//            if (quantity > current) {
+//                current = 0;
+//            }
+            if (current > 0) {
+                have.put(food, current);
+            } else {
+                have.remove(food);
+            }
+            System.out.println(have.get(food));
+        }
+
+        increaseCapacity(quantity);
+    }
+//        int n = 0;
+//
+//        if (this.have.containsKey(food)) {
+//            n = food.getAmountS();
+//            if (n == 0) {
+//                return;
+//            }
+////            if(this.have.get(food) - quantity<0){
+////                this.have.put(food, 0);
+////            }
+//            n = this.have.get(food) - quantity;
+//        }
+//        this.have.put(food, n);
+//        food.setStorage(this);
 
     public abstract void label();
 
@@ -89,9 +125,29 @@ public abstract class Storage implements Observer {
     //REQUIRES inFridge to be true
     //MODIFIES object in list
     //EFFECTS subtracts n to the amount of given Food
-    public void remove(int num, String name, FoodCategory category) {
-        if (inStorage(name)) {
-            this.addToStorage(new Food(name, category), -num);
+//    public void remove(int num, String name, FoodCategory category) {
+//        if (inStorage(name)) {
+//            this.addToStorage(new Food(name, category), -num);
+//        }
+//    }
+
+    public void removeFromNeedBuy(Food food, int quantity){
+
+        if(have.containsKey(food)){
+            int current = howMany(food);
+            if (quantity == 0 || current == 0){
+                return;
+            }
+            current = current - quantity;
+            if (quantity > current){
+                current = 0;
+            }
+            if(current > 0) {
+                have.put(food, current);
+            } else {
+                have.remove(food);
+            }
+            System.out.println(have.get(food));
         }
     }
 
@@ -101,8 +157,12 @@ public abstract class Storage implements Observer {
     public void decreaseCapacity(Food food) {
 //        for (Map.Entry<Food, Integer> e : have.entrySet()) {
 //        for (int i = 0; i <= food.getAmount(); i++) {
-        capacity = capacity - food.getAmount();
+        capacity = capacity - food.getAmountS();
 
+    }
+
+    public void increaseCapacity(int amount){
+        capacity = capacity + amount;
     }
 
 

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.StoragePanel">
+    <tabs>
+        <Tab fx:id="fridgeTab" closable="false" text="Fridge">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ProgressBar fx:id="fridgeCapacityBar" layoutX="343.0" layoutY="373.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" progress="0.0" />
+                        <TableView fx:id="fridgeTable" layoutX="335.0" layoutY="15.0" prefHeight="346.0" prefWidth="352.0" AnchorPane.leftAnchor="335.0">
+                            <columns>
+                                <TableColumn minWidth="30.0" prefWidth="146.99993896484375" resizable="false" text="C1" />
+                                <TableColumn minWidth="30.0" resizable="false" text="C2" />
+                            </columns>
+                        </TableView>
+                        <TextField fx:id="fridgeNameInput" layoutX="38.0" layoutY="51.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <TextField fx:id="fridgeAmountInput" layoutX="38.0" layoutY="114.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <ChoiceBox fx:id="fridgeChoiceInput" layoutX="38.0" layoutY="175.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="175.0" />
+                        <Button fx:id="fridgeSubmit" layoutX="247.0" layoutY="179.0" mnemonicParsing="false" onMouseClicked="#createNewOutputFridgeItem" text="Submit">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Label layoutX="557.0" layoutY="373.0" text="Remaining Capacity">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="20.0" text="Please enter what you bought:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="88.0" text="Please enter the amount:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="149.0" text="Please choose a category:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="fridgeMainMenu" layoutX="16.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#backToMainScreen" text="Main Menu">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                  <Button fx:id="removeButton" layoutX="247.0" layoutY="287.0" mnemonicParsing="false" onMouseClicked="#removeItemFridge" text="Remove">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="21.0" layoutY="228.0" text="Select an item to decrease quantity from the table">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="252.0" text="Please input the amount to decrease:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="fridgeRemoveInput" layoutX="38.0" layoutY="287.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab fx:id="freezerTab" text="Freezer">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <TableView fx:id="freezerTable" layoutX="335.0" layoutY="15.0" prefHeight="346.0" prefWidth="352.0" AnchorPane.leftAnchor="338.0">
+                            <columns>
+                                <TableColumn prefWidth="120.72174072265625" resizable="false" text="C1" />
+                                <TableColumn prefWidth="107.54574584960938" resizable="false" text="C2" />
+                            </columns>
+                        </TableView>
+                        <Label layoutX="21.0" layoutY="20.0" text="Please enter what you bought:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="freezerNameInput" layoutX="38.0" layoutY="51.0" prefHeight="30.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <TextField fx:id="freezerAmountInput" layoutX="38.0" layoutY="114.0" prefHeight="30.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <Label layoutX="21.0" layoutY="88.0" text="Please enter the amount:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="149.0" text="Please choose a category:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <ChoiceBox fx:id="freezerChoiceInput" layoutX="38.0" layoutY="175.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="175.0" />
+                        <Button fx:id="freezerSubmit" layoutX="247.0" layoutY="179.0" mnemonicParsing="false" onMouseClicked="#createNewOutputFreezerItem" text="Submit">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="freezerMainMenu" layoutX="16.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#backToMainScreen" text="Main Menu">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <ProgressBar fx:id="freezerCapacityBar" layoutX="343.0" layoutY="373.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" progress="0.0" />
+                        <Label layoutX="557.0" layoutY="373.0" text="Remaining Capacity">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                  <Label layoutX="21.0" layoutY="228.0" text="Select an item to decrease quantity from the table">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="252.0" text="Please input the amount to decrease:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="freezerRemoveInput" layoutX="38.0" layoutY="287.0" prefHeight="30.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="freezerRemove" layoutX="247.0" layoutY="287.0" mnemonicParsing="false" onMouseClicked="#removeItemFreezer" text="Remove">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+        <Tab fx:id="cupboardTab" text="Cupboard">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ProgressBar fx:id="cupboardCapacityBar" layoutX="343.0" layoutY="373.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" progress="0.0" />
+                        <TableView fx:id="cupboardTable" layoutX="338.0" layoutY="13.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="352.0" AnchorPane.leftAnchor="338.0">
+                            <columns>
+                                <TableColumn prefWidth="120.72174072265625" resizable="false" text="C1" />
+                                <TableColumn prefWidth="107.54574584960938" resizable="false" text="C2" />
+                            </columns>
+                        </TableView>
+                        <Label layoutX="557.0" layoutY="373.0" text="Remaining Capacity">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="20.0" text="Please enter what you bought:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="88.0" text="Please enter the amount:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <Label layoutX="21.0" layoutY="149.0" text="Please choose a category:">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="cupboardNameInput" layoutX="38.0" layoutY="51.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <TextField fx:id="cupboardAmountInput" layoutX="38.0" layoutY="114.0">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </TextField>
+                        <ChoiceBox fx:id="cupboardChoiceInput" layoutX="38.0" layoutY="175.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" prefWidth="175.0" />
+                        <Button fx:id="cupboardSubmit" layoutX="247.0" layoutY="179.0" mnemonicParsing="false" onMouseClicked="#createNewOutputCupboardItem" text="Submit">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="cupboardMainMenu" layoutX="16.0" layoutY="373.0" mnemonicParsing="false" onMouseClicked="#backToMainScreen" text="Main Menu">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Button>
+                  <Label layoutX="21.0" layoutY="228.0" text="Select an item to decrease quantity from the table">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="252.0" text="Please input the amount to decrease:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="cupboardRemoveInput" layoutX="38.0" layoutY="287.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="cupboardRemove" layoutX="247.0" layoutY="287.0" mnemonicParsing="false" onMouseClicked="#removeItemCupboard" text="Remove">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                    </children></AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>
